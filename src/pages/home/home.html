@@ -1,6 +1,7 @@
 <ion-header>
     <page-navbar [menu]="true">
-        <span nav-title> <img src="assets/svg/app-logo-blanco.svg" width="42" height="42" /> </span>
+        <span nav-title>
+            <img src="assets/svg/app-logo-blanco.svg" width="42" height="42" /> </span>
         <!-- <img src="assets/svg/app-logo-blanco.svg" width="42" height="42" /> -->
     </page-navbar>
 </ion-header>
@@ -18,14 +19,14 @@
     <!-- Paciente no logueado -->
     <div class="andes-fab open" [ngClass]="{show: started }" *ngIf="!isProfesional()">
         <ul>
-            <!-- <li side="top-right">
+            <li side="top-right">
                 <div class="item-content ic-1">
                     <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="misTurnos()">
                         <ion-icon name="andes-turno"></ion-icon>
                     </button>
                     <div class="fab-title" (click)="misTurnos()">Mis Turnos</div>
                 </div>
-            </li> -->
+            </li>
             <li side="right">
                 <div class="item-content ic-2">
                     <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="laboratorio()">
@@ -60,8 +61,8 @@
             </li> -->
         </ul>
         <button class="home-button" (click)="login()">
-                <img class="icon-lg" src="assets/svg/andes-paciente-in.svg" *ngIf="isLogin()" alt="">
-                <img class="icon-lg" src="assets/svg/andes-paciente-out.svg" *ngIf="!isLogin()" alt="">
+            <img class="icon-lg" src="assets/svg/andes-paciente-in.svg" *ngIf="isLogin()" alt="">
+            <img class="icon-lg" src="assets/svg/andes-paciente-out.svg" *ngIf="!isLogin()" alt="">
         </button>
     </div>
 

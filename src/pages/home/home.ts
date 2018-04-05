@@ -23,6 +23,7 @@ import { ScanDocumentoPage } from '../profesional/mpi/scan-documento/scan-docume
 import { Screenshot } from '@ionic-native/screenshot';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
+import { SolicitudesPage } from '../solicitudes/solicitudes';
 
 @Component({
     selector: 'page-home',
@@ -98,7 +99,7 @@ export class HomePage {
 
     misTurnos() {
         if (this.isLogin()) {
-            this.navCtrl.push(TurnosPage);
+            this.navCtrl.push(SolicitudesPage);
         }
     }
 

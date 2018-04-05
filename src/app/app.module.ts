@@ -12,6 +12,7 @@ import { AgmCoreModule } from '@agm/core';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { TurnosPage } from '../pages/turnos/turnos';
+import { SolicitudesPage } from '../pages/solicitudes/solicitudes';
 import { TurnosDetallePage } from '../pages/turnos/detalles/turno-detalle';
 import { EscanerDniPage } from '../pages/registro/escaner-dni/escaner-dni';
 import { RegistroPersonalDataPage } from '../pages/registro/personal-data/personal-data';
@@ -99,12 +100,14 @@ import { EmailComposer } from '@ionic-native/email-composer';
 import { TabViewProfilePage } from '../pages/profile/paciente/tab-view-profile';
 import { ProfileContactosPage } from '../pages/profile/paciente/profile-contactos';
 import { GeoProvider } from '../providers/geo-provider';
+import { SolicitudesProvider } from '../providers/solicitudes';
 
 @NgModule({
     declarations: [
         MyApp,
         HomePage,
         TurnosPage,
+        SolicitudesPage,
         EscanerDniPage,
         RegistroPersonalDataPage,
         RegistroUserDataPage,
@@ -167,6 +170,7 @@ import { GeoProvider } from '../providers/geo-provider';
         MyApp,
         HomePage,
         TurnosPage,
+        SolicitudesPage,
         EscanerDniPage,
         RegistroPersonalDataPage,
         RegistroUserDataPage,
@@ -219,6 +223,7 @@ import { GeoProvider } from '../providers/geo-provider';
         { provide: ErrorHandler, useClass: IonicErrorHandler },
         AuthProvider,
         TurnosProvider,
+        SolicitudesProvider,
         DeviceProvider,
         ToastProvider,
         PacienteProvider,

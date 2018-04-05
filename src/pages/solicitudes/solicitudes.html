@@ -1,0 +1,22 @@
+<ion-header background="dark">
+    <page-navbar [menu]="false">
+        <span nav-title> Mis Solicitudes | Listado </span>
+    </page-navbar>
+</ion-header>
+
+<ion-content>
+
+    <div class="no-item">
+        <ads-icon icon="ball-triangle"></ads-icon>
+    </div>
+
+    <ul class="andes-list" *ngIf="solicitudes?.length > 0">
+        <li *ngFor="let turno of solicitudes">
+            <turno-item [turno]="turno" (onCancelEvent)="onCancelTurno($event)" (onClickEvent)="onClickEvent($event)"></turno-item>
+        </li>
+    </ul>
+
+    <div *ngIf="solicitudes?.length == 0" class="no-item">
+        <h3> No tienes ningún programado </h3>
+    </div>
+</ion-content>
