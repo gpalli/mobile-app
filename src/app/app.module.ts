@@ -14,6 +14,7 @@ import { HomePage } from '../pages/home/home';
 import { TurnosPage } from '../pages/turnos/turnos';
 import { SolicitudesPage } from '../pages/solicitudes/solicitudes';
 import { TurnosDetallePage } from '../pages/turnos/detalles/turno-detalle';
+import { SolicitudesDetallePage } from '../pages/solicitudes/detalles/solicitud-detalle';
 import { EscanerDniPage } from '../pages/registro/escaner-dni/escaner-dni';
 import { RegistroPersonalDataPage } from '../pages/registro/personal-data/personal-data';
 import { RegistroUserDataPage } from '../pages/registro/user-data/user-data';
@@ -41,6 +42,8 @@ import { InformacionValidacionPage } from '../pages/registro/informacion-validac
 import { RecuperarPasswordPage } from '../pages/registro/recuperar-password/recuperar-password';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LaboratoriosPage } from '../pages/laboratorios/laboratorios';
+import { AgendasPacientePage } from '../pages/agendas/agendas';
+import { AgendasPacienteDetallePage } from '../pages/agendas/agenda-detalle/agenda-detalle';
 
 
 import { AdsIconPage } from '../components/ads-icon/ads-icon';
@@ -143,11 +146,14 @@ import { SolicitudesProvider } from '../providers/solicitudes';
         AdsAccordionContainerPage,
         LaboratoriosPage,
         TurnosDetallePage,
+        SolicitudesDetallePage,
         ScanDocumentoPage,
         RegistroPacientePage,
         AgendaDetallePage,
         TabViewProfilePage,
-        ProfileContactosPage
+        ProfileContactosPage,
+        AgendasPacientePage,
+        AgendasPacienteDetallePage
     ],
     imports: [
         BrowserModule,
@@ -203,12 +209,15 @@ import { SolicitudesProvider } from '../providers/solicitudes';
         RupConsultorioPage,
         LaboratoriosPage,
         TurnosDetallePage,
+        SolicitudesDetallePage,
         AdsAccordionContainerPage,
         ScanDocumentoPage,
         RegistroPacientePage,
         AgendaDetallePage,
         TabViewProfilePage,
-        ProfileContactosPage
+        ProfileContactosPage,
+        AgendasPacientePage,
+        AgendasPacienteDetallePage
     ],
     providers: [
         StatusBar,

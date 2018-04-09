@@ -1,0 +1,60 @@
+<ion-header background="dark">
+    <page-navbar [menu]="false">
+        <span nav-title> Mis Solicitudes | Detalle </span>
+    </page-navbar>
+</ion-header>
+
+<ion-content class="andes-detalle" padding>
+    <div class="no-item" *ngIf="!solicitud">
+        <ads-icon icon="ball-triangle"></ads-icon>
+    </div>
+    <div class="andes-detalle" *ngIf="solicitud">
+        <div class="andes-detalle-contenedor">
+
+            <div class="titulo-prefix">Tipo de Prestación</div>
+            <div class="titulo-principal md">
+                {{solicitud?.tipoPrestacion?.term}}
+                <!-- <br>
+                <span>{{paciente.apellido.toLowerCase()}}</span> -->
+            </div>
+
+            <!-- <div class="titulo-subfix">
+                {{paciente.sexo}}
+            </div>
+
+            <div class="info-detalle">
+            </div> -->
+        </div>
+        <ul class="andes-list">
+            <li>
+                <div class="andes-container">
+                    <ion-icon class="icon-action left xl" name="card"></ion-icon>
+                    <div class="andes-wraper">
+                        <div class="andes-list-prefix">Profesional</div>
+                        <h2 class="andes-list-title">
+                            {{solicitud?.profesional?.nombre}} {{solicitud?.profesional?.apellido}}
+                        </h2>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="andes-container">
+                    <ion-icon class="icon-action left xl" name="md-calendar"></ion-icon>
+                    <div class="andes-wraper">
+                        <div class="andes-list-prefix">Fecha de solicitud</div>
+                        <h2 class="andes-list-title">
+                            {{ solicitud?.fecha | date: "d 'de' MMMM 'del' yyyy"}}
+                        </h2>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="andes-container">
+                    <button ion-button block color="primary" (click)="turnos()"> Solicitar Turno</button>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+</ion-content>
