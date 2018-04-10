@@ -4,16 +4,17 @@ import { Subscription } from 'rxjs';
 
 // providers
 import { AgendasProvider } from '../../../providers/agendas';
+import { DarTurnoPage } from '../dar-turno/dar-turno';
 
 @Component({
-    selector: 'page-agenda-detalle',
-    templateUrl: 'agenda-detalle.html'
+    selector: 'page-turnos-paciente',
+    templateUrl: 'turnos.html'
 })
-export class AgendasPacienteDetallePage {
+export class TurnosPacientePage {
     turnos = [];
     private tipoPrestacion: any;
     bloques: any = null;
-
+    private agenda;
     private onResumeSubscription: Subscription;
 
     constructor(
@@ -22,12 +23,16 @@ export class AgendasPacienteDetallePage {
         public agendasProvider: AgendasProvider,
         public platform: Platform) {
 
+        this.agenda = this.navParams.get('agenda');
+        this.tipoPrestacion = this.navParams.get('tipoPrestacion');
         this.onResumeSubscription = platform.resume.subscribe(() => {
+            this.filtrarBloques(this.agenda);
         });
 
-        let agenda = this.navParams.get('agenda');
+        this.filtrarBloques(this.agenda);
+    }
 
-        this.tipoPrestacion = this.navParams.get('tipoPrestacion');
+    filtrarBloques(agenda) {
         // Filtramos bloques que coincidan con la prestacion
         this.bloques = agenda.bloques.filter(bloque => {
             let result = bloque.tipoPrestaciones.filter(tipo => {
@@ -35,7 +40,6 @@ export class AgendasPacienteDetallePage {
             });
             return (result.length > 0)
         });
-
         for (let bloque of this.bloques) {
             for (let turno of bloque.turnos) {
                 if (turno.estado === 'disponible') {
@@ -43,8 +47,16 @@ export class AgendasPacienteDetallePage {
                 }
             }
         }
+    }
 
-        console.log(this.bloques);
+    darTurno(turno) {
+        let arrBloque = this.bloques.filter(bloque => {
+            let result = (bloque.turnos.filter(t => {
+                return (turno.id === t.id)
+            }));
+            return (result.length > 0);
+        })
+        this.navCtrl.push(DarTurnoPage, { agenda: this.agenda, turno: turno, bloque: arrBloque[0] });
     }
 
     ngOnDestroy() {

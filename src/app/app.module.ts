@@ -43,8 +43,8 @@ import { RecuperarPasswordPage } from '../pages/registro/recuperar-password/recu
 import { DomSanitizer } from '@angular/platform-browser';
 import { LaboratoriosPage } from '../pages/laboratorios/laboratorios';
 import { AgendasPacientePage } from '../pages/agendas/agendas';
-import { AgendasPacienteDetallePage } from '../pages/agendas/agenda-detalle/agenda-detalle';
-
+import { TurnosPacientePage } from '../pages/agendas/turnos/turnos';
+import { DarTurnoPage } from '../pages/agendas/dar-turno/dar-turno';
 
 import { AdsIconPage } from '../components/ads-icon/ads-icon';
 import { AdsAccordionPage } from '../components/ads-accordion/ads-accordion';
@@ -153,7 +153,8 @@ import { SolicitudesProvider } from '../providers/solicitudes';
         TabViewProfilePage,
         ProfileContactosPage,
         AgendasPacientePage,
-        AgendasPacienteDetallePage
+        TurnosPacientePage,
+        DarTurnoPage
     ],
     imports: [
         BrowserModule,
@@ -217,7 +218,8 @@ import { SolicitudesProvider } from '../providers/solicitudes';
         TabViewProfilePage,
         ProfileContactosPage,
         AgendasPacientePage,
-        AgendasPacienteDetallePage
+        TurnosPacientePage,
+        DarTurnoPage
     ],
     providers: [
         StatusBar,

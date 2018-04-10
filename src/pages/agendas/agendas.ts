@@ -6,8 +6,7 @@ import * as moment from 'moment/moment';
 // providers
 import { AgendasProvider } from '../../providers/agendas';
 import { AuthProvider } from '../../providers/auth/auth';
-import { AgendasPacienteDetallePage } from './agenda-detalle/agenda-detalle';
-// import { AgendaDetallePage } from '../../../pages/profesional/agendas/agenda-detalle/agenda-detalle';
+import { TurnosPacientePage } from './turnos/turnos';
 
 @Component({
     selector: 'page-agendasPaciente',
@@ -64,7 +63,7 @@ export class AgendasPacientePage {
     }
 
     verDetalle(agenda) {
-        this.navCtrl.push(AgendasPacienteDetallePage, { agenda: agenda, tipoPrestacion: this.tipoPrestacion });
+        this.navCtrl.push(TurnosPacientePage, { agenda: agenda, tipoPrestacion: this.tipoPrestacion });
     }
 
 }
