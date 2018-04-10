@@ -14,7 +14,7 @@ import { AgendasPacienteDetallePage } from './agenda-detalle/agenda-detalle';
     templateUrl: 'agendas.html'
 })
 export class AgendasPacientePage {
-    agendas: any[] = null;
+    agendas = [];
     private tipoPrestacion: any;
     private onResumeSubscription: Subscription;
 
@@ -45,20 +45,23 @@ export class AgendasPacientePage {
             idTipoPrestacion: solicitud.tipoPrestacion.id,
             organizacion: solicitud.organizacion.id
         };
+
         this.agendasProvider.get(params).then((data: any[]) => {
             for (let agenda of data) {
-                for (let bloque of agenda.bloques) {
-                    if (bloque.restantesProgramados > 0 && bloque.turnos.find(turno => turno.estado === 'disponible') != null) {
-                        this.agendas = data;
-                    }
+                let resultado = agenda.bloques.filter(bloque => {
+                    let result = bloque.tipoPrestaciones.filter(tipo => {
+                        return (tipo.id == this.tipoPrestacion.id);
+                    });
+                    return ((result.length > 0)
+                        && bloque.restantesProgramados > 0
+                        && bloque.turnos.find(turno => turno.estado === 'disponible') != null);
+                });
+                if (resultado.length > 0) {
+                    this.agendas.push(agenda);
                 }
             }
         })
     }
-
-    // onCancelAgenda($event) {
-    //     console.log('onCancelAgenda');
-    // }
 
     verDetalle(agenda) {
         this.navCtrl.push(AgendasPacienteDetallePage, { agenda: agenda, tipoPrestacion: this.tipoPrestacion });
