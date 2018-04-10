@@ -11,11 +11,8 @@
 
     <ul *ngIf="bloques?.length > 0" class="andes-list" compact>
         <li *ngFor="let turno of turnos">
-            <div class="andes-container">
+            <div class="andes-container" (click)="darTurno(turno)">
                 <div class="andes-wraper">
-                    <!-- <h2 class="andes-list-title">
-                        {{turno.paciente.nombre}} {{turno.paciente.apellido}}
-                    </h2> -->
                     <div class="andes-list-content">
                         <div class="columna">
                             <ion-icon name="md-time"></ion-icon>
@@ -23,7 +20,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <ion-icon class="icon-action right xl" name="ios-arrow-forward-outline"></ion-icon> -->
             </div>
         </li>
     </ul>
