@@ -42,10 +42,19 @@ export class AgendasPacientePage {
             estados: ['publicada'],
             idProfesional: solicitud.profesional.id,
             fechaDesde: moment(solicitud.fecha).startOf('day').toISOString(),
-            idTipoPrestacion: solicitud.tipoPrestacion.id
+            idTipoPrestacion: solicitud.tipoPrestacion.id,
+            organizacion: solicitud.organizacion.id
         };
+        console.log(data)
         this.agendasProvider.get(data).then((data: any[]) => {
-            this.agendas = data;
+            console.log(data)
+            for (let agenda of data) {
+                for (let bloque of agenda.bloques) {
+                    if (bloque.restantesProgramados > 0 && bloque.turnos.find(turno => turno.estado === 'disponible') != null) {
+                        this.agendas = data;
+                    }
+                }
+            }
         })
     }
 

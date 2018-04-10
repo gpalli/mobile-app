@@ -1,6 +1,6 @@
 <ion-header background="dark">
     <page-navbar [menu]="false">
-        <span nav-title> Listado de pacientes </span>
+        <span nav-title> Turnos disponibles </span>
     </page-navbar>
 </ion-header>
 
@@ -9,7 +9,7 @@
         <ads-icon icon="ball-triangle"></ads-icon>
     </div>
 
-    <ul *ngIf="agenda.bloques?.length > 0" class="andes-list" compact>
+    <ul *ngIf="bloques?.length > 0" class="andes-list" compact>
         <li *ngFor="let turno of turnos">
             <div class="andes-container">
                 <div class="andes-wraper">
@@ -27,4 +27,7 @@
             </div>
         </li>
     </ul>
+    <div *ngIf="bloques?.length === 0" class="no-item">
+        <h3> No hay turnos disponibles en esta agenda </h3>
+    </div>
 </ion-content>
