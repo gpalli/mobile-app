@@ -8,36 +8,43 @@ import { NetworkProvider } from './network';
 export class PacienteProvider {
   public paciente: any;
   private baseUrl = 'modules/mobileApp';
+  private urlOS = '/modules/obraSocial';  // URL to web api
 
   constructor(
     public network: NetworkProvider
   ) {
   }
 
-  get (id) {
-    return this.network.get(this.baseUrl + '/paciente/' + id, { }).then((paciente) => {
+  get(id) {
+    return this.network.get(this.baseUrl + '/paciente/' + id, {}).then((paciente) => {
       this.paciente = paciente;
       return Promise.resolve(paciente);
     }).catch(err => Promise.reject(err));
   }
 
-  laboratorios (id, extras) {
+  laboratorios(id, extras) {
     return this.network.get(this.baseUrl + '/laboratorios/' + id, extras);
   }
 
-  update (id, data) {
+  update(id, data) {
     return this.network.put(this.baseUrl + '/paciente/' + id, data, {});
   }
 
-  patch (id, data) {
+  patch(id, data) {
     return this.network.patch(this.baseUrl + '/pacientes/' + id, data, {});
   }
 
-  restablecerPassword (email, data) {
+  restablecerPassword(email, data) {
     return this.network.post(this.baseUrl + '/restablecer-password', data).then((paciente) => {
       this.paciente = paciente;
       return Promise.resolve(paciente);
     }).catch(err => Promise.reject(err));
   }
-}
 
+  getObraSocial(dni: any) {
+    return this.network.get(this.urlOS + '/puco/' + dni).then((os) => {
+      return Promise.resolve(os);
+    }).catch(err => Promise.reject(err));
+  }
+
+}
