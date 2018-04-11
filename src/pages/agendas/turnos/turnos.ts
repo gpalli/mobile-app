@@ -56,7 +56,7 @@ export class TurnosPacientePage {
             }));
             return (result.length > 0);
         })
-        this.navCtrl.push(DarTurnoPage, { agenda: this.agenda, turno: turno, bloque: arrBloque[0] });
+        this.navCtrl.push(DarTurnoPage, { agenda: this.agenda, turno: turno, bloque: arrBloque[0], tipoPrestacion: this.tipoPrestacion });
     }
 
     ngOnDestroy() {
