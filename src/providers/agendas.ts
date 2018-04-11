@@ -21,5 +21,11 @@ export class AgendasProvider {
   patch(id, params) {
     return this.network.patch(this.baseUrl + '/agenda/' + id, params, {});
   }
+
+  save(turno: any, options: any = {}) {
+    if (turno.idAgenda) {
+      return this.network.patch(this.baseUrl + '/turno/' + turno.idTurno + '/bloque/' + turno.idBloque + '/agenda/' + turno.idAgenda, turno, options);
+    }
+  }
 }
 
