@@ -6,6 +6,7 @@ import { PacienteProvider } from '../../../providers/paciente';
 import { ToastProvider } from '../../../providers/toast';
 import { AuthProvider } from '../../../providers/auth/auth';
 import { AgendasProvider } from '../../../providers/agendas';
+import { HomePage } from '../../home/home';
 
 
 @Component({
@@ -19,8 +20,7 @@ export class DarTurnoPage {
     agenda: any;
     bloque: any;
     turno: any;
-    private onResumeSubscription: Subscription;
-
+    showConfirmationSplash = false;
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
@@ -35,13 +35,6 @@ export class DarTurnoPage {
         this.bloque = this.navParams.get('bloque');
         this.turno = this.navParams.get('turno');
         this.tipoPrestacion = this.navParams.get('tipoPrestacion');
-
-        // console.log(this.agenda)
-        // console.log(this.bloque)
-        // console.log(this.turno)
-
-        // this.onResumeSubscription = platform.resume.subscribe(() => {
-        // });
     }
 
     profesionalName() {
@@ -87,15 +80,19 @@ export class DarTurnoPage {
                 motivoConsulta: ''
             };
             this.agendasProvider.save(datosTurno, { showError: false }).then(resultado => {
+                this.showConfirmationSplash = true;
                 console.log(resultado);
             }).catch(() => {
                 this.toast.danger('Error asignando el turno, intente nuevamente');
             });
-
         }).catch(() => {
             // this.inProgress = false;
             console.log("ERROR");
         });
+    }
+
+    volver() {
+        this.navCtrl.push(HomePage);
 
     }
 

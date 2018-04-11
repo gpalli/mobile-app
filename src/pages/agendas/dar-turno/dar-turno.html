@@ -1,10 +1,10 @@
-<ion-header background="dark">
+<ion-header *ngIf="!showConfirmationSplash" background="dark">
     <page-navbar [menu]="false">
         <span nav-title> Turno seleccionado </span>
     </page-navbar>
 </ion-header>
 
-<ion-content class="andes-detalle" padding>
+<ion-content *ngIf="!showConfirmationSplash" class="andes-detalle" padding>
     <div class="andes-detalle-contenedor">
         <!-- <span class="badge success">Turno seleccionado</span> -->
         <!-- <div class="titulo-secundario">{{ turno.tipoPrestacion.term }}</div> -->
@@ -53,4 +53,11 @@
             </div>
         </li>
     </ul>
+</ion-content>
+
+<ion-content *ngIf="showConfirmationSplash" class="andes-detalle" padding>
+    <h3> INSERTE AQUI UN CONFIRMATION SPLASH DISENIADO POR J.N.S. </h3>
+    <div class="andes-container">
+        <button ion-button block color="primary" (click)="volver()"> Entendido</button>
+    </div>
 </ion-content>
