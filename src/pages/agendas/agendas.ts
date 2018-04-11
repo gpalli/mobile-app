@@ -61,6 +61,13 @@ export class AgendasPacientePage {
             }
         })
     }
+    fecha(agenda) {
+        return moment(agenda.horaInicio).format('DD [de] MMMM');
+    }
+
+    hora(agenda) {
+        return moment(agenda.horaInicio).format('HH:mm');
+    }
 
     verDetalle(agenda) {
         this.navCtrl.push(TurnosPacientePage, { agenda: agenda, tipoPrestacion: this.tipoPrestacion });

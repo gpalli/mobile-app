@@ -7,7 +7,30 @@
 <ion-content>
     <ul class="andes-list" *ngIf="agendas?.length > 0" compact>
         <li *ngFor="let agenda of agendas">
-            <agenda-item [agenda]="agenda" (onCancelEvent)="onCancelAgenda($event)" (click)="verDetalle(agenda)"></agenda-item>
+            <div class="andes-container" (click)="verDetalle(agenda)">
+                <div class="andes-wraper">
+                    <h2 class="andes-list-title">
+                        {{tipoPrestacion?.term}}
+                    </h2>
+                    <div class="andes-list-content">
+                        <div class="columna">
+                            <ion-icon name="andes-agendas"></ion-icon>
+                            <span class="andes-list-subtitle">{{ fecha(agenda) }} </span>
+                        </div>
+                        <div class="columna">
+                            <ion-icon name="andes-horario"></ion-icon>
+                            <span class="andes-list-subtitle">{{hora(agenda)}}</span>
+                        </div>
+                    </div>
+                    <div class="andes-list-content">
+                        <div class="columna">
+                            <ion-icon name="andes-hospital"></ion-icon>
+                            {{agenda.organizacion.nombre}}
+                        </div>
+                    </div>
+                </div>
+                <ion-icon class="icon-action right xl" name="ios-arrow-forward-outline"></ion-icon>
+            </div>
         </li>
     </ul>
 
