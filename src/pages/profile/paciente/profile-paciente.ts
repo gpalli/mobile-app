@@ -9,6 +9,7 @@ import { Base64 } from '@ionic-native/base64';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { ChartsModule } from 'ng2-charts';
 
 // pages
 import { DondeVivoDondeTrabajoPage } from './donde-vivo-donde-trabajo/donde-vivo-donde-trabajo';
@@ -62,6 +63,13 @@ export class ProfilePacientePage {
 
     mapObject: any;
     inProgress = false;
+    flagPeso = false;
+    pacienteLocalStorge = null;
+    lineChartData = null;
+    lineChartLabels = null;
+    lineChartOptions = null;
+    lineChartType = null;
+
     constructor(
         public storage: Storage,
         public authService: AuthProvider,
@@ -109,6 +117,24 @@ export class ProfilePacientePage {
                 this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(this.paciente.fotoMobile);
             }
 
+            // inicializamos desde el local Storage POR EL MOMENTO HARDCODEAOMS
+            this.pacienteLocalStorge = {
+                peso: {
+                    fecha: moment().format('DD/MM/YYYY HH:mm'),
+                    valor: '0'
+                },
+                presion: {
+                    sistolica: '120',
+                    diastolica: '80'
+                },
+                grupoFactor: '3',
+                pesoHistory: [],
+                presionHistory: []
+            }
+
+            this.loadChartPeso();
+            // console.log('datos cargados: ', this.pacienteLocalStorge.peso.fecha);
+
             // preparamos la direccion de trabajo
             // this.direccionDondeTrabajo = paciente.direccion.find( item => item.ranking == 1);
         }).catch(() => {
@@ -120,6 +146,41 @@ export class ProfilePacientePage {
     ionViewDidEnter() {
 
     }
+
+    agregarPeso() {
+        this.flagPeso = true;
+    }
+    guardarPeso() {
+        let newPeso = {
+            fecha: this.pacienteLocalStorge.peso.fecha,
+            valor: this.pacienteLocalStorge.peso.valor
+        }
+        this.pacienteLocalStorge.pesoHistory.push(newPeso);
+        this.flagPeso = false;
+        this.loadChartPeso();
+    }
+    cancelarPeso() {
+        this.flagPeso = false;
+    }
+
+    loadChartPeso() {
+        let pesoData = this.pacienteLocalStorge.pesoHistory.map(item => {
+            return item['valor'];
+        });
+        let pesoFecha = this.pacienteLocalStorge.pesoHistory.map(item => {
+            return item['fecha'];
+        })
+        this.lineChartData = [
+            { data: pesoData, label: 'Peso' }
+        ];
+        this.lineChartLabels = pesoFecha;
+        this.lineChartOptions = {
+            responsive: true
+        };
+        this.lineChartType = 'line';
+    }
+
+
 
     onInputChange(list, newType) {
         let last = list.length - 1;
@@ -238,6 +299,7 @@ export class ProfilePacientePage {
         })
 
     }
+
 
     takePhoto() {
         // let options = {

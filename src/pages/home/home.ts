@@ -25,6 +25,7 @@ import { Screenshot } from '@ionic-native/screenshot';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { CampaniasListPage } from '../datos-utiles/campanias/campanias-list';
+import { ProfilePacientePage } from '../profile/paciente/profile-paciente';
 
 @Component({
     selector: 'page-home',
@@ -71,6 +72,12 @@ export class HomePage {
             this.navCtrl.push(LoginPage);
         } else {
             //   this.reporter.report();
+        }
+    }
+
+    miPerfil() {
+        if (this.isLogin()) {
+            this.navCtrl.push(ProfilePacientePage);
         }
     }
 

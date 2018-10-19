@@ -89,6 +89,7 @@ import { DropdownTurnoItem } from '../components/turno-item/dropdown-turno-item'
 import { TurnoItemComponent } from '../components/turno-item/turno-item';
 import { AgendaItemComponent } from '../components/agenda-item/agenda-item';
 import { DropdownAgendaItem } from '../components/agenda-item/dropdown-agenda-item';
+import { ChartsModule } from 'ng2-charts';
 
 // Providers
 import { AuthProvider } from '../providers/auth/auth';
@@ -180,6 +181,7 @@ import { CampaniasProvider } from '../providers/campanias';
         BrowserModule,
         HttpModule,
         FormsModule,
+        ChartsModule,
 
         ReactiveFormsModule,
         IonicModule.forRoot(MyApp),

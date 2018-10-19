@@ -19,8 +19,9 @@
     <!-- Paciente no logueado -->
     <section class="fab-container" [ngClass]="{'show': started}" *ngIf="!isProfesional()">
         <button class="fab-principal home-button" (click)="login()">
-            <img class="" src="assets/svg/andes-paciente-in.svg" *ngIf="isLogin()" alt="">
-            <img class="nologin" src="assets/svg/andes-paciente-out.svg" *ngIf="!isLogin()" alt="">
+            <img class="" src="assets/svg/andes-paciente-in.svg" *ngIf="isLogin()" (click)="miPerfil()" alt="">
+            <img class="
+                nologin" src="assets/svg/andes-paciente-out.svg" *ngIf="!isLogin()" alt="">
         </button>
         <ul class="circle-container">
 
