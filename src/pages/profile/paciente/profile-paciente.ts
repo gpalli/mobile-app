@@ -117,7 +117,24 @@ export class ProfilePacientePage {
                 this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(this.paciente.fotoMobile);
             }
 
-            // inicializamos desde el local Storage POR EL MOMENTO HARDCODEAOMS
+            this.loadFromLocalStorage()
+            // Grafica la información
+            this.loadChartPeso();
+
+            // preparamos la direccion de trabajo
+            // this.direccionDondeTrabajo = paciente.direccion.find( item => item.ranking == 1);
+        }).catch(() => {
+            this.inProgress = false;
+        });
+
+    }
+
+    loadFromLocalStorage() {
+        this.pacienteLocalStorge = this.storage.get('patientStorage');
+        console.log('informacion del storage: ', this.storage.get('patientStorage'));
+        debugger;
+        if (!this.pacienteLocalStorge.peso) {
+            // Inicialización inicial
             this.pacienteLocalStorge = {
                 peso: {
                     fecha: moment().format('DD/MM/YYYY HH:mm'),
@@ -131,20 +148,7 @@ export class ProfilePacientePage {
                 pesoHistory: [],
                 presionHistory: []
             }
-
-            this.loadChartPeso();
-            // console.log('datos cargados: ', this.pacienteLocalStorge.peso.fecha);
-
-            // preparamos la direccion de trabajo
-            // this.direccionDondeTrabajo = paciente.direccion.find( item => item.ranking == 1);
-        }).catch(() => {
-            this.inProgress = false;
-        });
-
-    }
-
-    ionViewDidEnter() {
-
+        }
     }
 
     agregarPeso() {
@@ -157,6 +161,8 @@ export class ProfilePacientePage {
         }
         this.pacienteLocalStorge.pesoHistory.push(newPeso);
         this.flagPeso = false;
+        this.storage.set('patientStorage', this.pacienteLocalStorge);
+        console.log('informacion del storage: ', this.storage.get('patientStorage'));
         this.loadChartPeso();
     }
     cancelarPeso() {
