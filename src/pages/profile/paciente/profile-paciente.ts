@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { NavController, NavParams, LoadingController, MenuController, Platform } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, MenuController, Platform, SelectPopover } from 'ionic-angular';
 import * as moment from 'moment';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Crop } from '@ionic-native/crop';
@@ -63,12 +63,28 @@ export class ProfilePacientePage {
 
     mapObject: any;
     inProgress = false;
+    datosGraficar = false;
     flagPeso = false;
-    pacienteLocalStorge = null;
-    lineChartData = null;
-    lineChartLabels = null;
-    lineChartOptions = null;
-    lineChartType = null;
+    pacienteLocalStorge = {
+        peso: {
+            fecha: moment().format('DD/MM/YYYY HH:mm'),
+            valor: '0'
+        },
+        presion: {
+            sistolica: '0',
+            diastolica: '0'
+        },
+        grupoFactor: '0',
+        pesoHistory: [],
+        presionHistory: []
+    };
+
+    lineChartData = [{ data: [], label: 'Peso' }];
+    lineChartLabels = [];
+    lineChartOptions = {
+        responsive: true
+    };
+    lineChartType = 'line';
 
     constructor(
         public storage: Storage,
@@ -101,28 +117,22 @@ export class ProfilePacientePage {
     ionViewDidLoad() {
         let pacienteId = this.authService.user.pacientes[0].id;
         this.inProgress = true;
-        this.pacienteProvider.get(pacienteId).then((paciente: any) => {
+        this.pacienteProvider.get(pacienteId).then(async (paciente: any) => {
             this.inProgress = false;
             this.paciente = paciente;
-            this.contactos = paciente.contacto;
-            this.direcciones = paciente.direccion;
+            // this.contactos = paciente.contacto;
+            // this.direcciones = paciente.direccion;
 
-            this.telefonos = paciente.contacto.filter(item => item.tipo !== 'email');
-            this.emails = paciente.contacto.filter(item => item.tipo === 'email');
+            // this.telefonos = paciente.contacto.filter(item => item.tipo !== 'email');
+            // this.emails = paciente.contacto.filter(item => item.tipo === 'email');
 
-            this.telefonos.push({ tipo: 'celular', valor: '' });
-            this.emails.push({ tipo: 'email', valor: '' });
+            // this.telefonos.push({ tipo: 'celular', valor: '' });
+            // this.emails.push({ tipo: 'email', valor: '' });
 
-            if (this.paciente.fotoMobile) {
-                this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(this.paciente.fotoMobile);
-            }
-
+            // if (this.paciente.fotoMobile) {
+            //     this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(this.paciente.fotoMobile);
+            // }
             this.loadFromLocalStorage()
-            // Grafica la información
-            this.loadChartPeso();
-
-            // preparamos la direccion de trabajo
-            // this.direccionDondeTrabajo = paciente.direccion.find( item => item.ranking == 1);
         }).catch(() => {
             this.inProgress = false;
         });
@@ -130,25 +140,12 @@ export class ProfilePacientePage {
     }
 
     loadFromLocalStorage() {
-        this.pacienteLocalStorge = this.storage.get('patientStorage');
-        console.log('informacion del storage: ', this.storage.get('patientStorage'));
-        debugger;
-        if (!this.pacienteLocalStorge.peso) {
-            // Inicialización inicial
-            this.pacienteLocalStorge = {
-                peso: {
-                    fecha: moment().format('DD/MM/YYYY HH:mm'),
-                    valor: '0'
-                },
-                presion: {
-                    sistolica: '120',
-                    diastolica: '80'
-                },
-                grupoFactor: '3',
-                pesoHistory: [],
-                presionHistory: []
+        this.storage.get('patientStorage').then((itemFound) => {
+            if (itemFound) {
+                this.pacienteLocalStorge = itemFound;
             }
-        }
+            this.loadChartPeso();
+        })
     }
 
     agregarPeso() {
@@ -161,21 +158,24 @@ export class ProfilePacientePage {
         }
         this.pacienteLocalStorge.pesoHistory.push(newPeso);
         this.flagPeso = false;
-        this.storage.set('patientStorage', this.pacienteLocalStorge);
-        console.log('informacion del storage: ', this.storage.get('patientStorage'));
-        this.loadChartPeso();
+        this.datosGraficar = false;
+        this.storage.set('patientStorage', this.pacienteLocalStorge).then((item) => {
+            this.loadChartPeso();
+            return;
+        });
     }
     cancelarPeso() {
         this.flagPeso = false;
     }
 
     loadChartPeso() {
-        let pesoData = this.pacienteLocalStorge.pesoHistory.map(item => {
-            return item['valor'];
-        });
-        let pesoFecha = this.pacienteLocalStorge.pesoHistory.map(item => {
-            return item['fecha'];
+
+        let pesoFecha = this.pacienteLocalStorge.pesoHistory.map(dates => {
+            return dates['fecha'];
         })
+        let pesoData = this.pacienteLocalStorge.pesoHistory.map(values => {
+            return values['valor'];
+        });
         this.lineChartData = [
             { data: pesoData, label: 'Peso' }
         ];
@@ -184,6 +184,7 @@ export class ProfilePacientePage {
             responsive: true
         };
         this.lineChartType = 'line';
+        this.datosGraficar = true;
     }
 
 

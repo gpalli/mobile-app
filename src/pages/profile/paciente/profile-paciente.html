@@ -123,7 +123,7 @@
                     </button>
                 </ion-col>
             </ion-row>
-            <ion-row *ngIf="!flagPeso">
+            <ion-row *ngIf="datosGraficar">
                 <ion-col col-12>
                     <div>
                         <canvas baseChart width="800" height="600" [datasets]="lineChartData" [labels]="lineChartLabels"
@@ -136,7 +136,6 @@
     <ion-fab bottom right>
         <button ion-fab color="danger">
             <ion-icon name="add"></ion-icon>
-            <ion-label>here</ion-label>
         </button>
         <ion-fab-list side="top">
             <button ion-fab>
