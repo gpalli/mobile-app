@@ -257,19 +257,19 @@ export class ProfilePacientePage {
 
     loadChartPresion() {
 
-        let presionDiastolicaData = this.pacienteLocalStorge.presionHistory.map(diastolicas => {
-            return diastolicas['diastolica']
-        });
         let presionSistolicaData = this.pacienteLocalStorge.presionHistory.map(sistolicas => {
             return sistolicas['sistolica']
+        });
+        let presionDiastolicaData = this.pacienteLocalStorge.presionHistory.map(diastolicas => {
+            return diastolicas['diastolica']
         });
         let presionFecha = this.pacienteLocalStorge.presionHistory.map(dates => {
             return dates['fecha']
         })
 
         this.lineChartDataPresion = [
-            { data: presionDiastolicaData, label: 'Diastólica' },
             { data: presionSistolicaData, label: 'Sistólica' }
+            { data: presionDiastolicaData, label: 'Diastólica' },
         ];
         this.lineChartLabelsPresion = presionFecha;
         this.lineChartOptionsPresion = {
