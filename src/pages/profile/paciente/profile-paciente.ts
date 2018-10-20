@@ -65,26 +65,59 @@ export class ProfilePacientePage {
     inProgress = false;
     datosGraficar = false;
     flagPeso = false;
+    flagPresion = false;
     pacienteLocalStorge = {
         peso: {
             fecha: moment().format('DD/MM/YYYY HH:mm'),
             valor: '0'
         },
         presion: {
+            fecha: moment().format('DD/MM/YYYY HH:mm'),
             sistolica: '0',
             diastolica: '0'
         },
         grupoFactor: '0',
         pesoHistory: [],
-        presionHistory: []
+        presionHistory: [12, 33, 67, 22]
     };
 
-    lineChartData = [{ data: [], label: 'Peso' }];
+    lineChartData = [{ data: [], label: '' }];
+    lineChartDataPresion = [{ data: [], label: '' }];
     lineChartLabels = [];
+    lineChartColors = [{
+        backgroundColor: 'rgba(103, 58, 183, .1)',
+        borderColor: 'rgb(103, 58, 183)',
+        pointBackgroundColor: 'rgb(103, 58, 183)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(103, 58, 183, .8)'
+    },];
+
+    lineChartLabelsPresion = [];
     lineChartOptions = {
         responsive: true
     };
+    lineChartOptionsPresion = {
+        responsive: true
+    }
     lineChartType = 'line';
+    lineChartTypePresion = 'line';
+    lineChartColorsPresion = [{ // grey
+        backgroundColor: 'rgba(148,159,177,0.2)',
+        borderColor: 'rgba(148,159,177,1)',
+        pointBackgroundColor: 'rgba(148,159,177,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+    { // dark grey
+        backgroundColor: 'rgba(77,83,96,0.2)',
+        borderColor: 'rgba(77,83,96,1)',
+        pointBackgroundColor: 'rgba(77,83,96,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,83,96,1)'
+    },];
 
     constructor(
         public storage: Storage,
@@ -140,10 +173,12 @@ export class ProfilePacientePage {
     }
 
     loadFromLocalStorage() {
+        // this.storage.set('patientStorage', null);
         this.storage.get('patientStorage').then((itemFound) => {
             if (itemFound) {
                 this.pacienteLocalStorge = itemFound;
             }
+            this.loadChartPresion();
             this.loadChartPeso();
         })
     }
@@ -151,21 +186,53 @@ export class ProfilePacientePage {
     agregarPeso() {
         this.flagPeso = true;
     }
+
+    agregarPresion() {
+        this.flagPresion = true;
+    }
+
     guardarPeso() {
-        let newPeso = {
+        let newPeso: any = {
             fecha: this.pacienteLocalStorge.peso.fecha,
             valor: this.pacienteLocalStorge.peso.valor
-        }
+        };
         this.pacienteLocalStorge.pesoHistory.push(newPeso);
         this.flagPeso = false;
         this.datosGraficar = false;
         this.storage.set('patientStorage', this.pacienteLocalStorge).then((item) => {
+            this.loadChartPresion();
             this.loadChartPeso();
             return;
         });
     }
     cancelarPeso() {
         this.flagPeso = false;
+    }
+
+    guardarPresion() {
+        let newPresion: any = {
+            fecha: this.pacienteLocalStorge.presion.fecha,
+            sistolica: this.pacienteLocalStorge.presion.diastolica,
+            diastolica: this.pacienteLocalStorge.presion.sistolica
+        };
+        this.pacienteLocalStorge.presionHistory.push(newPresion);
+        this.flagPresion = false;
+        this.datosGraficar = false;
+        this.storage.set('patientStorage', this.pacienteLocalStorge).then((item) => {
+            this.loadChartPresion();
+            this.loadChartPeso();
+            return;
+        });
+    }
+    cancelarPresion() {
+        this.flagPresion = false;
+    }
+
+    updateBlood() {
+        this.storage.get('patientStorage').then((datos) => {
+            datos.grupoFactor = this.pacienteLocalStorge.grupoFactor
+            this.storage.set('patientStorage', datos);
+        })
     }
 
     loadChartPeso() {
@@ -176,6 +243,7 @@ export class ProfilePacientePage {
         let pesoData = this.pacienteLocalStorge.pesoHistory.map(values => {
             return values['valor'];
         });
+
         this.lineChartData = [
             { data: pesoData, label: 'Peso' }
         ];
@@ -187,7 +255,29 @@ export class ProfilePacientePage {
         this.datosGraficar = true;
     }
 
+    loadChartPresion() {
 
+        let presionDiastolicaData = this.pacienteLocalStorge.presionHistory.map(diastolicas => {
+            return diastolicas['diastolica']
+        });
+        let presionSistolicaData = this.pacienteLocalStorge.presionHistory.map(sistolicas => {
+            return sistolicas['sistolica']
+        });
+        let presionFecha = this.pacienteLocalStorge.presionHistory.map(dates => {
+            return dates['fecha']
+        })
+
+        this.lineChartDataPresion = [
+            { data: presionDiastolicaData, label: 'Diastólica' },
+            { data: presionSistolicaData, label: 'Sistólica' }
+        ];
+        this.lineChartLabelsPresion = presionFecha;
+        this.lineChartOptionsPresion = {
+            responsive: true
+        };
+        this.lineChartTypePresion = 'line';
+        this.datosGraficar = true;
+    }
 
     onInputChange(list, newType) {
         let last = list.length - 1;
@@ -197,6 +287,8 @@ export class ProfilePacientePage {
             list.pop();
         }
     }
+
+
 
     reportarChange() {
         // console.log('Cucumbers new state:' + this.reportarError);
