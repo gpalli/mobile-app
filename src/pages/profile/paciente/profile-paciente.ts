@@ -268,8 +268,8 @@ export class ProfilePacientePage {
         })
 
         this.lineChartDataPresion = [
-            { data: presionSistolicaData, label: 'Sistólica' }
-            { data: presionDiastolicaData, label: 'Diastólica' },
+            { data: presionSistolicaData, label: 'Sistólica' },
+            { data: presionDiastolicaData, label: 'Diastólica' }
         ];
         this.lineChartLabelsPresion = presionFecha;
         this.lineChartOptionsPresion = {
