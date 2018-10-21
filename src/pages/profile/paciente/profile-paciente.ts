@@ -70,17 +70,20 @@ export class ProfilePacientePage {
     pesoFecha;
     pacienteLocalStorage = {
         peso: {
-            fecha: moment().format('DD/MM/YYYY HH:mm'),
+            fecha: this.UTCToLocalTimeString(new Date()),
             valor: '0'
         },
         presion: {
-            fecha: moment().format('DD/MM/YYYY HH:mm'),
+            fecha: this.UTCToLocalTimeString(new Date()),
             sistolica: '0',
             diastolica: '0'
         },
         grupoFactor: '0',
-        pesoHistory: [],
-        presionHistory: [12, 33, 67, 22]
+        pesoHistory: [{ data: [0], label: 'Peso' }],
+        presionHistory: [
+            { data: [0], label: 'Sistólica' },
+            { data: [0], label: 'Diastólica' }
+        ]
     };
 
     lineChartData = [{ data: [], label: '' }];
@@ -93,7 +96,7 @@ export class ProfilePacientePage {
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: 'rgba(103, 58, 183, .8)'
-    },];
+    }];
 
     lineChartLabelsPresion = [];
     lineChartOptions = {
@@ -245,9 +248,15 @@ export class ProfilePacientePage {
     }
 
     updateBlood() {
+        console.log('los datos actuales: ', this.pacienteLocalStorage);
         this.storage.get('patientStorage').then((datos) => {
-            datos.grupoFactor = this.pacienteLocalStorage.grupoFactor
-            this.storage.set('patientStorage', datos);
+            if (datos) {
+                datos.grupoFactor = this.pacienteLocalStorage.grupoFactor
+                this.storage.set('patientStorage', datos);
+            } else {
+                // Con los datos iniciales
+                this.storage.set('patientStorage', this.pacienteLocalStorage)
+            }
         })
     }
 
