@@ -63,7 +63,7 @@
                         <div class="andes-wraper">
                             <div class="andes-list-prefix">Último peso registrado</div>
                             <h2 class="andes-list-title">
-                                {{pacienteLocalStorge.peso.valor}} kg
+                                {{pacienteLocalStorage.peso.valor}} kg
                             </h2>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                         <ion-icon class="icon-action left xl" name="md-calendar"></ion-icon>
                         <div class="andes-list-prefix">Último presión arterial medida</div>
                         <h2 class="andes-list-title">
-                            {{pacienteLocalStorge.presion.sistolica}} - {{pacienteLocalStorge.presion.diastolica}}
+                            {{pacienteLocalStorage.presion.sistolica}} - {{pacienteLocalStorage.presion.diastolica}}
                         </h2>
                     </div>
                 </ion-col>
@@ -83,7 +83,7 @@
                         <div>
                             <ion-item>
                                 <ion-label floating>Grupo Sanguíneo</ion-label>
-                                <ion-select [(ngModel)]="pacienteLocalStorge.grupoFactor" (ionChange)="updateBlood()">
+                                <ion-select [(ngModel)]="pacienteLocalStorage.grupoFactor" (ionChange)="updateBlood()">
                                     <ion-option value="0">0-</ion-option>
                                     <ion-option value="1">0+</ion-option>
                                     <ion-option value="2">A-</ion-option>
@@ -102,11 +102,11 @@
                 <ion-col col-6>
                     <ion-item>
                         <ion-label>Fecha: </ion-label>
-                        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="pacienteLocalStorge.peso.fecha"></ion-datetime>
+                        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="pesoFecha"></ion-datetime>
                     </ion-item>
                 </ion-col>
                 <ion-col col-6>
-                    <ion-range min="10" max="350" step="1" snaps="true" [(ngModel)]="pacienteLocalStorge.peso.valor"
+                    <ion-range min="10" max="350" step="1" snaps="true" [(ngModel)]="pacienteLocalStorage.peso.valor"
                         color="danger">
                         <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
                         <ion-icon range-right color="danger" name="thermometer"></ion-icon>
@@ -126,19 +126,20 @@
             <ion-row *ngIf="flagPresion">
                 <ion-col col-4>
                     <ion-item>
-                        <ion-label>Fecha: </ion-label>
-                        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="pacienteLocalStorge.presion.fecha"></ion-datetime>
+
+                        <ion-label>Fecha:</ion-label>
+                        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="presionFecha"></ion-datetime>
                     </ion-item>
                 </ion-col>
                 <ion-col col-4>
-                    <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="pacienteLocalStorge.presion.sistolica"
+                    <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="pacienteLocalStorage.presion.sistolica"
                         color="danger">
                         <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
                         <ion-icon range-right color="danger" name="thermometer"></ion-icon>
                     </ion-range>
                 </ion-col>
                 <ion-col col-4>
-                    <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="pacienteLocalStorge.presion.diastolica"
+                    <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="pacienteLocalStorage.presion.diastolica"
                         color="danger">
                         <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
                         <ion-icon range-right color="danger" name="thermometer"></ion-icon>
