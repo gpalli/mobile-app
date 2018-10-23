@@ -248,7 +248,6 @@ export class ProfilePacientePage {
     }
 
     updateBlood() {
-        console.log('los datos actuales: ', this.pacienteLocalStorage);
         this.storage.get('patientStorage').then((datos) => {
             if (datos) {
                 datos.grupoFactor = this.pacienteLocalStorage.grupoFactor
