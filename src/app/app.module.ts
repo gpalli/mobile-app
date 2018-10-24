@@ -280,7 +280,7 @@ import { CampaniasProvider } from '../providers/campanias';
         ErrorReporterProvider,
         Geolocation,
         NativeGeocoder,
-        { provide: LOCALE_ID, useValue: 'es-ES' },
+        // { provide: LOCALE_ID, useValue: 'es-ES' },
         Camera,
         Crop,
         ImageResizer,

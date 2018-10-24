@@ -122,7 +122,7 @@ export class ProfilePacientePage {
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },];
+    }];
 
     constructor(
         public storage: Storage,
@@ -136,21 +136,20 @@ export class ProfilePacientePage {
         public pacienteProvider: PacienteProvider,
         public assetProvider: ConstanteProvider,
         public toast: ToastProvider,
+        public platform: Platform,
         private camera: Camera,
         private cropService: Crop,
         private imageResizer: ImageResizer,
         private base64: Base64,
         private photoViewer: PhotoViewer,
         private sanitizer: DomSanitizer,
-        private nativeGeocoder: NativeGeocoder,
-        public platform: Platform) {
+        private nativeGeocoder: NativeGeocoder
+    ) {
         // this.menu.swipeEnable(false);
 
     }
 
-    fechaNacimiento() {
-        return moment(this.paciente.fechaNacimiento).format('DD/MM/YYYY')
-    }
+
 
     ionViewDidLoad() {
         let pacienteId = this.authService.user.pacientes[0].id;
@@ -175,6 +174,10 @@ export class ProfilePacientePage {
             this.inProgress = false;
         });
 
+    }
+
+    fechaNacimiento() {
+        return moment(this.paciente.fechaNacimiento).format('DD/MM/YYYY')
     }
 
     loadFromLocalStorage() {
