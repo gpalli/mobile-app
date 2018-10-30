@@ -94,13 +94,7 @@ export class ProfilePacientePage {
         public assetProvider: ConstanteProvider,
         public toast: ToastProvider,
         public platform: Platform,
-        private camera: Camera,
-        private cropService: Crop,
-        private imageResizer: ImageResizer,
-        private base64: Base64,
         private photoViewer: PhotoViewer,
-        private sanitizer: DomSanitizer,
-        private nativeGeocoder: NativeGeocoder
     ) {
         // this.menu.swipeEnable(false);
 
@@ -164,7 +158,8 @@ export class ProfilePacientePage {
                 // Con los datos iniciales
                 this.storage.set('patientStorage', this.pacienteLocalStorage)
             }
-        })
+            this.toast.danger('Grupo Sanguineo actualizado');
+        });
     }
 
 
