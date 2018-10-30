@@ -23,7 +23,7 @@ import { ScanDocumentoPage } from '../profesional/mpi/scan-documento/scan-docume
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { CampaniasListPage } from '../datos-utiles/campanias/campanias-list';
 import { AutoControlPage } from '../autoControl/autoControl';
-import { ProfilePacientePage } from 'pages/profile/paciente/profile-paciente';
+import { ProfilePacientePage } from '../../pages/profile/paciente/profile-paciente';
 
 @Component({
     selector: 'page-home',
@@ -75,12 +75,6 @@ export class HomePage {
 
     centrosDeSalud() {
         this.navCtrl.push(CentrosSaludPage);
-    }
-
-    miAutoControl() {
-        if (this.isLogin()) {
-            this.navCtrl.push(AutoControlPage);
-        }
     }
 
     faq() {

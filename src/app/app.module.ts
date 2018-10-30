@@ -46,6 +46,7 @@ import { RecuperarPasswordPage } from '../pages/registro/recuperar-password/recu
 import { DomSanitizer } from '@angular/platform-browser';
 import { LaboratoriosPage } from '../pages/laboratorios/laboratorios';
 import { MapTurnosPage } from '../pages/turnos/mapa/mapa';
+import { AutoControlPage } from '../pages/autoControl/autoControl';
 
 import { AdsIconPage } from '../components/ads-icon/ads-icon';
 import { AdsAccordionPage } from '../components/ads-accordion/ads-accordion';
@@ -56,7 +57,6 @@ import { AgendaDetallePage } from '../pages/profesional/agendas/agenda-detalle/a
 import { TabViewProfilePage } from '../pages/profile/paciente/tab-view-profile';
 import { ProfileContactosPage } from '../pages/profile/paciente/profile-contactos';
 import { PuntoSaludablePage } from '../pages/datos-utiles/punto-saludable/punto-saludable';
-import { AutoControlPage } from '../pages/autoControl/autoControl';
 
 // Campañas
 import { CampaniasListPage } from '../pages/datos-utiles/campanias/campanias-list';
@@ -120,7 +120,6 @@ import { ArbolItem } from '../pages/profesional/form-terapeutico/arbolItem';
 import { NoticiasProvider } from '../providers/noticias';
 import { CheckerGpsProvider } from '../providers/locations/checkLocation';
 import { CampaniasProvider } from '../providers/campanias';
-import { AutoControlPage } from '../pages/autoControl/autoControl';
 
 @NgModule({
     declarations: [

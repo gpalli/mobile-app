@@ -1,23 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { NavController, NavParams, LoadingController, MenuController, Platform } from 'ionic-angular';
-import * as moment from 'moment';
-import { Base64 } from '@ionic-native/base64';
-import { ChartsModule } from 'ng2-charts';
+import { NavController, NavParams, LoadingController, MenuController, Platform, AlertController } from 'ionic-angular';
 
 
 // providers
-import { AlertController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { PacienteProvider } from '../../providers/paciente';
 import { ConstanteProvider } from '../../providers/constantes';
 import { ToastProvider } from '../../providers/toast';
+import { Storage } from '@ionic/storage';
 
 @Component({
     selector: 'autoControl',
     templateUrl: 'autoControl.html',
 })
-export class AutoControlPage {
+export class AutoControlPage implements OnDestroy {
+
+    ngOnDestroy() {
+    }
 
     inProgress = false;
     datosGraficar = false;
@@ -93,7 +93,7 @@ export class AutoControlPage {
         public pacienteProvider: PacienteProvider,
         public assetProvider: ConstanteProvider,
         public toast: ToastProvider,
-        public platform: Platform,
+        public platform: Platform
     ) { }
 
     ionViewDidLoad() {

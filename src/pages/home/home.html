@@ -19,7 +19,7 @@
     <!-- Paciente no logueado -->
     <section class="fab-container" [ngClass]="{'show': started}" *ngIf="!isProfesional()">
         <button class="fab-principal home-button" (click)="login()">
-            <img class="" src="assets/svg/andes-paciente-in.svg" *ngIf="isLogin()" (click)="miAutoControl()" alt="">
+            <img class="" src="assets/svg/andes-paciente-in.svg" *ngIf="isLogin()" (click)="miPerfil()" alt="">
             <img class="
                 nologin" src="assets/svg/andes-paciente-out.svg" *ngIf="!isLogin()" alt="">
         </button>
@@ -44,10 +44,10 @@
             </li>
             <li class="fab-secundario">
                 <div class="item-content vertical ic-2">
-                    <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="misLaboratorio()">
+                    <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="misLaboratorios()">
                         <ion-icon name="andes-laboratorio"></ion-icon>
                     </button>
-                    <div class="fab-title" (click)="misLaboratorio()">Mis<br>Laboratorios </div>
+                    <div class="fab-title" (click)="misLaboratorios()">Mis<br>Laboratorios </div>
                 </div>
             </li>
             <!-- NO BORRAR: ver qué se hace con la Historia de Salud -->
@@ -111,7 +111,7 @@
                     <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="rup()">
                         <ion-icon name="andes-vacuna"></ion-icon>
                     </button>
-                    <div class="fab-title" (click)="vacunas()"> RUP </div>
+                    <div class="fab-title" (click)="misVacunas()"> RUP </div>
                 </div>
             </li>
         </ul>
