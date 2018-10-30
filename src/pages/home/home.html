@@ -36,26 +36,35 @@
 
             <li class="fab-secundario">
                 <div class="item-content horizontal ic-1">
-                    <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="vacunas()">
+                    <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="misVacunas()">
                         <ion-icon name="andes-vacuna"></ion-icon>
                     </button>
-                    <div class="fab-title" (click)="vacunas()">Mis<br>Vacunas</div>
+                    <div class="fab-title" (click)="misVacunas()">Mis<br>Vacunas</div>
                 </div>
             </li>
             <li class="fab-secundario">
                 <div class="item-content vertical ic-2">
-                    <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="laboratorio()">
+                    <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="misLaboratorio()">
                         <ion-icon name="andes-laboratorio"></ion-icon>
                     </button>
-                    <div class="fab-title" (click)="laboratorio()">Mis<br>Laboratorios </div>
+                    <div class="fab-title" (click)="misLaboratorio()">Mis<br>Laboratorios </div>
                 </div>
             </li>
-            <li class="fab-secundario">
+            <!-- NO BORRAR: ver qué se hace con la Historia de Salud -->
+            <!-- <li class="fab-secundario">
                 <div class="item-content horizontal-left ic-3">
-                    <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="historiaDeSalud()">
+                    <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="miHistoriaDeSalud()">
                         <ion-icon name="andes-huds"></ion-icon>
                     </button>
-                    <div class="fab-title" (click)="historiaDeSalud()">Mi Historia<br>de Salud</div>
+                    <div class="fab-title" (click)="miHistoriaDeSalud()">Mi Historia<br>de Salud</div>
+                </div>
+            </li> -->
+            <li class="fab-secundario">
+                <div class="item-content horizontal2 ic-3">
+                    <button class="item-icon outline circular" [disabled]="!isLogin()" (click)="misAutocontroles()">
+                        <ion-icon name="andes-huds"></ion-icon>
+                    </button>
+                    <div class="fab-title" (click)="misAutocontroles()">Mis <br>autocontroles</div>
                 </div>
             </li>
 

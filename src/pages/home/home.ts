@@ -18,14 +18,12 @@ import { LaboratoriosPage } from '../laboratorios/laboratorios';
 import { FaqPage } from '../datos-utiles/faq/faq';
 import { HistoriaDeSaludPage } from '../historia-salud/historia-salud';
 import { DeviceProvider } from '../../providers/auth/device';
-import { RupAdjuntarPage } from '../../pages/profesional/rup-adjuntar/rup-adjuntar';
 import { RupConsultorioPage } from '../profesional/consultorio/rup-consultorio';
 import { ScanDocumentoPage } from '../profesional/mpi/scan-documento/scan-documento';
-import { Screenshot } from '@ionic-native/screenshot';
-import { EmailComposer } from '@ionic-native/email-composer';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { CampaniasListPage } from '../datos-utiles/campanias/campanias-list';
 import { ProfilePacientePage } from '../profile/paciente/profile-paciente';
+import { AutoControlPage } from "../autoControl/autoControl";
 
 @Component({
     selector: 'page-home',
@@ -75,30 +73,16 @@ export class HomePage {
         }
     }
 
-    miPerfil() {
-        if (this.isLogin()) {
-            this.navCtrl.push(ProfilePacientePage);
-        }
+    centrosDeSalud() {
+        this.navCtrl.push(CentrosSaludPage);
     }
 
-    rup() {
-        this.navCtrl.push(RupConsultorioPage);
+    faq() {
+        this.navCtrl.push(FaqPage);
     }
 
     numerosUtiles() {
         this.navCtrl.push(NumerosUtilesPage);
-    }
-
-    vacunas() {
-        if (this.isLogin()) {
-            this.navCtrl.push(VacunasPage);
-        }
-    }
-
-    laboratorio() {
-        if (this.isLogin()) {
-            this.navCtrl.push(LaboratoriosPage);
-        }
     }
 
     campanias() {
@@ -113,12 +97,50 @@ export class HomePage {
         this.navCtrl.push(FeedNoticiasPage);
     }
 
+
+
+    // SOLO PACIENTE
+    miPerfil() {
+        if (this.isLogin()) {
+            this.navCtrl.push(ProfilePacientePage);
+        }
+    }
+
     misTurnos() {
         if (this.isLogin()) {
             this.navCtrl.push(TurnosPage);
         }
     }
 
+    misVacunas() {
+        if (this.isLogin()) {
+            this.navCtrl.push(VacunasPage);
+        }
+    }
+
+    misLaboratorios() {
+        if (this.isLogin()) {
+            this.navCtrl.push(LaboratoriosPage);
+        }
+    }
+
+    miHistoriaDeSalud() {
+        if (this.isLogin()) {
+            this.navCtrl.push(HistoriaDeSaludPage);
+        }
+    }
+
+    misAutocontroles() {
+        if (this.isLogin()) {
+            this.navCtrl.push(AutoControlPage);
+        }
+    }
+
+
+    // SOLO PROFESIONAL
+    rup() {
+        this.navCtrl.push(RupConsultorioPage);
+    }
 
     misAgendas() {
         // this.navCtrl.push(RupAdjuntarPage,  { id: '5a93fe29071906410e389279' }  );
@@ -130,20 +152,6 @@ export class HomePage {
     mpi() {
         if (this.isLogin()) {
             this.navCtrl.push(ScanDocumentoPage);
-        }
-    }
-
-    centrosDeSalud() {
-        this.navCtrl.push(CentrosSaludPage);
-    }
-
-    faq() {
-        this.navCtrl.push(FaqPage);
-    }
-
-    historiaDeSalud() {
-        if (this.isLogin()) {
-            this.navCtrl.push(HistoriaDeSaludPage);
         }
     }
 
