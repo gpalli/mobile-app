@@ -63,11 +63,6 @@ export class ProfilePacientePage {
 
     mapObject: any;
     inProgress = false;
-    datosGraficar = false;
-    flagPeso = false;
-    flagPresion = false;
-    presionFecha;
-    pesoFecha;
     pacienteLocalStorage = {
         peso: {
             fecha: this.UTCToLocalTimeString(new Date()),
@@ -85,44 +80,6 @@ export class ProfilePacientePage {
             { data: [0], label: 'Diastólica' }
         ]
     };
-
-    lineChartData = [{ data: [], label: '' }];
-    lineChartDataPresion = [{ data: [], label: '' }];
-    lineChartLabels = [];
-    lineChartColors = [{
-        backgroundColor: 'rgba(103, 58, 183, .1)',
-        borderColor: 'rgb(103, 58, 183)',
-        pointBackgroundColor: 'rgb(103, 58, 183)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(103, 58, 183, .8)'
-    }];
-
-    lineChartLabelsPresion = [];
-    lineChartOptions = {
-        responsive: true
-    };
-    lineChartOptionsPresion = {
-        responsive: true
-    }
-    lineChartType = 'line';
-    lineChartTypePresion = 'line';
-    lineChartColorsPresion = [{ // grey
-        backgroundColor: 'rgba(148,159,177,0.2)',
-        borderColor: 'rgba(148,159,177,1)',
-        pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    { // dark grey
-        backgroundColor: 'rgba(77,83,96,0.2)',
-        borderColor: 'rgba(77,83,96,1)',
-        pointBackgroundColor: 'rgba(77,83,96,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(77,83,96,1)'
-    }];
 
     constructor(
         public storage: Storage,
@@ -186,22 +143,9 @@ export class ProfilePacientePage {
             if (itemFound) {
                 this.pacienteLocalStorage = itemFound;
             }
-            this.loadChartPresion();
-            this.loadChartPeso();
         })
     }
 
-    agregarPeso() {
-        this.pesoFecha = this.UTCToLocalTimeString(new Date());
-        this.flagPeso = true;
-        this.datosGraficar = false
-    }
-
-    agregarPresion() {
-        this.presionFecha = this.UTCToLocalTimeString(new Date());
-        this.flagPresion = true;
-        this.datosGraficar = false;
-    }
 
     // Función para convertir a fecha y hora actual y que sea reconocido por el componente (ya que siempre espera ISOString)
     UTCToLocalTimeString(d: Date) {
@@ -209,45 +153,6 @@ export class ProfilePacientePage {
         d.setHours(d.getHours() + timeOffsetInHours);
 
         return d.toISOString();
-    }
-
-    guardarPeso() {
-        this.pacienteLocalStorage.peso.fecha = this.pesoFecha;
-        let newPeso: any = {
-            fecha: this.pacienteLocalStorage.peso.fecha,
-            valor: this.pacienteLocalStorage.peso.valor
-        };
-        this.pacienteLocalStorage.pesoHistory.push(newPeso);
-        this.flagPeso = false;
-        this.datosGraficar = false;
-        this.storage.set('patientStorage', this.pacienteLocalStorage).then((item) => {
-            this.loadChartPresion();
-            this.loadChartPeso();
-            return;
-        });
-    }
-    cancelarPeso() {
-        this.flagPeso = false;
-    }
-
-    guardarPresion() {
-        this.pacienteLocalStorage.presion.fecha = this.presionFecha;
-        let newPresion: any = {
-            fecha: this.pacienteLocalStorage.presion.fecha,
-            sistolica: this.pacienteLocalStorage.presion.diastolica,
-            diastolica: this.pacienteLocalStorage.presion.sistolica
-        };
-        this.pacienteLocalStorage.presionHistory.push(newPresion);
-        this.flagPresion = false;
-        this.datosGraficar = false;
-        this.storage.set('patientStorage', this.pacienteLocalStorage).then((item) => {
-            this.loadChartPresion();
-            this.loadChartPeso();
-            return;
-        });
-    }
-    cancelarPresion() {
-        this.flagPresion = false;
     }
 
     updateBlood() {
@@ -262,49 +167,6 @@ export class ProfilePacientePage {
         })
     }
 
-    loadChartPeso() {
-
-        let pesoFecha = this.pacienteLocalStorage.pesoHistory.map(dates => {
-            return dates['fecha'];
-        })
-        let pesoData = this.pacienteLocalStorage.pesoHistory.map(values => {
-            return values['valor'];
-        });
-
-        this.lineChartData = [
-            { data: pesoData, label: 'Peso' }
-        ];
-        this.lineChartLabels = pesoFecha;
-        this.lineChartOptions = {
-            responsive: true
-        };
-        this.lineChartType = 'line';
-        this.datosGraficar = true;
-    }
-
-    loadChartPresion() {
-
-        let presionSistolicaData = this.pacienteLocalStorage.presionHistory.map(sistolicas => {
-            return sistolicas['sistolica']
-        });
-        let presionDiastolicaData = this.pacienteLocalStorage.presionHistory.map(diastolicas => {
-            return diastolicas['diastolica']
-        });
-        let presionFecha = this.pacienteLocalStorage.presionHistory.map(dates => {
-            return dates['fecha']
-        })
-
-        this.lineChartDataPresion = [
-            { data: presionSistolicaData, label: 'Sistólica' },
-            { data: presionDiastolicaData, label: 'Diastólica' }
-        ];
-        this.lineChartLabelsPresion = presionFecha;
-        this.lineChartOptionsPresion = {
-            responsive: true
-        };
-        this.lineChartTypePresion = 'line';
-        this.datosGraficar = true;
-    }
 
     onInputChange(list, newType) {
         let last = list.length - 1;

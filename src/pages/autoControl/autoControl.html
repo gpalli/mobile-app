@@ -1,0 +1,191 @@
+<!-- <ion-header background="dark">
+    <page-navbar [menu]="false">
+        <div buttons>
+        </div>
+        <span nav-title> Mis juegos</span>
+    </page-navbar>
+</ion-header>
+
+<ion-content profile-paciente>
+    <div class="no-item" *ngIf="inProgress">
+        <ads-icon icon="ball-triangle"></ads-icon>
+    </div>
+
+
+    <div class="andes-detalle" *ngIf="paciente">
+        <div class="no-item" *ngIf="inProgress">
+            <ads-icon icon="ball-triangle"></ads-icon>
+        </div>
+        <div class="andes-detalle-contenedor" *ngIf="!inProgress">
+
+            <div class="titulo-prefix">Nombre Completo</div>
+            <div class="titulo-principal md">
+                {{paciente.nombre.toLowerCase()}}
+                <br>
+                <span>{{paciente.apellido.toLowerCase()}}</span>
+            </div>
+
+            <div class="titulo-subfix">
+                {{paciente.sexo}}
+            </div>
+
+        </div>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-3>
+                    <div class="andes-container">
+                        <ion-icon class="icon-action left xl" name="card"></ion-icon>
+                        <div class="andes-wraper">
+                            <div class="andes-list-prefix">Documento</div>
+                            <h2 class="andes-list-title">
+                                {{paciente.documento}}
+                            </h2>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col col-3>
+                    <div class="andes-container">
+                        <ion-icon class="icon-action left xl" name="md-calendar"></ion-icon>
+                        <div class="andes-wraper">
+                            <div class="andes-list-prefix">Fecha de nacimiento</div>
+                            <h2 class="andes-list-title">
+                                {{paciente.fechaNacimiento | date: "dd/MM/yyyy"}}
+                            </h2>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-3>
+                    <div class="andes-container">
+       
+                        <ion-icon class="icon-action left xl" name="md-calendar"></ion-icon>
+                        <div class="andes-wraper">
+                            <div class="andes-list-prefix">Último peso registrado</div>
+                            <h2 class="andes-list-title">
+                                {{pacienteLocalStorage.peso.valor}} kg
+                            </h2>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col col-3>
+                    <div class="andes-wraper">
+        
+                        <ion-icon class="icon-action left xl" name="md-calendar"></ion-icon>
+                        <div class="andes-list-prefix">Último presión arterial medida</div>
+                        <h2 class="andes-list-title">
+                            {{pacienteLocalStorage.presion.sistolica}} - {{pacienteLocalStorage.presion.diastolica}}
+                        </h2>
+                    </div>
+                </ion-col>
+                <ion-col col-3>
+                    <ion-list>
+                        <div>
+                            <ion-item>
+                                <ion-label floating>Grupo Sanguíneo</ion-label>
+                                <ion-select [(ngModel)]="pacienteLocalStorage.grupoFactor" (ionChange)="updateBlood()">
+                                    <ion-option value="0">0-</ion-option>
+                                    <ion-option value="1">0+</ion-option>
+                                    <ion-option value="2">A-</ion-option>
+                                    <ion-option value="3">A+</ion-option>
+                                    <ion-option value="4">B-</ion-option>
+                                    <ion-option value="5">B+</ion-option>
+                                    <ion-option value="6">AB-</ion-option>
+                                    <ion-option value="7">AB+</ion-option>
+                                </ion-select>
+                            </ion-item>
+                        </div>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="flagPeso">
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-label>Fecha: </ion-label>
+                        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="pesoFecha"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                    <ion-range min="10" max="350" step="1" snaps="true" [(ngModel)]="pacienteLocalStorage.peso.valor"
+                        color="danger">
+                        <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
+                        <ion-icon range-right color="danger" name="thermometer"></ion-icon>
+                    </ion-range>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="flagPeso">
+                <ion-col col-12>
+                    <button class="md rounded block success" (click)="guardarPeso()">
+                        Guardar
+                    </button>
+                    <button class="md rounded block warning" (click)="cancelarPeso()">
+                        Cancelar
+                    </button>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="flagPresion">
+                <ion-col col-4>
+                    <ion-item>
+
+                        <ion-label>Fecha:</ion-label>
+                        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="presionFecha"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-4>
+                    <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="pacienteLocalStorage.presion.sistolica"
+                        color="danger">
+                        <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
+                        <ion-icon range-right color="danger" name="thermometer"></ion-icon>
+                    </ion-range>
+                </ion-col>
+                <ion-col col-4>
+                    <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="pacienteLocalStorage.presion.diastolica"
+                        color="danger">
+                        <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
+                        <ion-icon range-right color="danger" name="thermometer"></ion-icon>
+                    </ion-range>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="flagPresion">
+                <ion-col col-12>
+                    <button class="md rounded block success" (click)="guardarPresion()">
+                        Guardar
+                    </button>
+                    <button class="md rounded block warning" (click)="cancelarPresion()">
+                        Cancelar
+                    </button>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="datosGraficar">
+                <ion-col col-12>
+                    <div>
+                        <canvas baseChart width="800" height="600" [datasets]="lineChartDataPresion" [labels]="lineChartLabelsPresion"
+                            [options]="lineChartOptionsPresion" [colors]="lineChartColorsPresion" [chartType]="lineChartTypePresion"></canvas>
+                    </div>
+                </ion-col>
+                <ion-col col-12>
+                    <div>
+                        <canvas baseChart width="800" height="600" [datasets]="lineChartData" [labels]="lineChartLabels"
+                            [options]="lineChartOptions" [colors]="lineChartColors" [chartType]="lineChartType"></canvas>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <ion-fab bottom right>
+        <button ion-fab color="danger">
+            <ion-icon name="add"></ion-icon>
+        </button>
+        <ion-fab-list side="top">
+            <button ion-fab (click)="agregarPresion()">
+                <ion-icon color="primary" name="logo-vimeo"></ion-icon>
+                <div class="label">Añadir presión arterial</div>
+            </button>
+            <button ion-fab (click)="agregarPeso()">
+                <ion-icon color="primary" name="logo-googleplus"></ion-icon>
+                <div class="label">Añadir preso</div>
+            </button>
+        </ion-fab-list>
+    </ion-fab>
+
+</ion-content> -->
