@@ -38,7 +38,7 @@ $mobile-app-font-path: $font-path !default;
   font-weight: normal !important;
   font-variant: normal !important;
   text-transform: none !important;
-  speak: none;
+  speak-as: none;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -87,3 +87,8 @@ $mobile-app-font-path: $font-path !default;
 @include makeIcon(huds, '\72');
 @include makeIcon(maltrato, '\76');
 @include makeIcon(agendas, '\78');
+
+// TAMAÑOS 
+.icon-inline-xl {
+  font-size: 3em;
+}
