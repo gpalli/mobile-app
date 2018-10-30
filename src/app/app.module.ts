@@ -119,7 +119,7 @@ import { ArbolItem } from '../pages/profesional/form-terapeutico/arbolItem';
 import { NoticiasProvider } from '../providers/noticias';
 import { CheckerGpsProvider } from '../providers/locations/checkLocation';
 import { CampaniasProvider } from '../providers/campanias';
-
+import { AutoControlPage } from '../pages/autoControl/autoControl';
 
 @NgModule({
     declarations: [
@@ -175,7 +175,8 @@ import { CampaniasProvider } from '../providers/campanias';
         PuntoSaludablePage,
         MapTurnosPage,
         CampaniasListPage,
-        CampaniaDetallePage
+        CampaniaDetallePage,
+        AutoControlPage
     ],
     imports: [
         BrowserModule,
@@ -246,7 +247,8 @@ import { CampaniasProvider } from '../providers/campanias';
         ArbolItem,
         PuntoSaludablePage,
         CampaniasListPage,
-        CampaniaDetallePage
+        CampaniaDetallePage,
+        AutoControlPage
     ],
     providers: [
         StatusBar,
