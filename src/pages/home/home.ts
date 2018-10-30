@@ -22,8 +22,8 @@ import { RupConsultorioPage } from '../profesional/consultorio/rup-consultorio';
 import { ScanDocumentoPage } from '../profesional/mpi/scan-documento/scan-documento';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { CampaniasListPage } from '../datos-utiles/campanias/campanias-list';
-import { ProfilePacientePage } from '../profile/paciente/profile-paciente';
-import { AutoControlPage } from "../autoControl/autoControl";
+import { AutoControlPage } from '../autoControl/autoControl';
+import { ProfilePacientePage } from 'pages/profile/paciente/profile-paciente';
 
 @Component({
     selector: 'page-home',
@@ -75,6 +75,12 @@ export class HomePage {
 
     centrosDeSalud() {
         this.navCtrl.push(CentrosSaludPage);
+    }
+
+    miAutoControl() {
+        if (this.isLogin()) {
+            this.navCtrl.push(AutoControlPage);
+        }
     }
 
     faq() {
