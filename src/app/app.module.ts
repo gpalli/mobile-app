@@ -56,6 +56,7 @@ import { AgendaDetallePage } from '../pages/profesional/agendas/agenda-detalle/a
 import { TabViewProfilePage } from '../pages/profile/paciente/tab-view-profile';
 import { ProfileContactosPage } from '../pages/profile/paciente/profile-contactos';
 import { PuntoSaludablePage } from '../pages/datos-utiles/punto-saludable/punto-saludable';
+import { AutoControlPage } from '../pages/autoControl/autoControl';
 
 // Campañas
 import { CampaniasListPage } from '../pages/datos-utiles/campanias/campanias-list';
@@ -175,7 +176,8 @@ import { CampaniasProvider } from '../providers/campanias';
         PuntoSaludablePage,
         MapTurnosPage,
         CampaniasListPage,
-        CampaniaDetallePage
+        CampaniaDetallePage,
+        AutoControlPage
     ],
     imports: [
         BrowserModule,
@@ -246,7 +248,8 @@ import { CampaniasProvider } from '../providers/campanias';
         ArbolItem,
         PuntoSaludablePage,
         CampaniasListPage,
-        CampaniaDetallePage
+        CampaniaDetallePage,
+        AutoControlPage
     ],
     providers: [
         StatusBar,

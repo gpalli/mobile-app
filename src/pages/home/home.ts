@@ -18,14 +18,11 @@ import { LaboratoriosPage } from '../laboratorios/laboratorios';
 import { FaqPage } from '../datos-utiles/faq/faq';
 import { HistoriaDeSaludPage } from '../historia-salud/historia-salud';
 import { DeviceProvider } from '../../providers/auth/device';
-import { RupAdjuntarPage } from '../../pages/profesional/rup-adjuntar/rup-adjuntar';
 import { RupConsultorioPage } from '../profesional/consultorio/rup-consultorio';
 import { ScanDocumentoPage } from '../profesional/mpi/scan-documento/scan-documento';
-import { Screenshot } from '@ionic-native/screenshot';
-import { EmailComposer } from '@ionic-native/email-composer';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { CampaniasListPage } from '../datos-utiles/campanias/campanias-list';
-import { ProfilePacientePage } from '../profile/paciente/profile-paciente';
+import { AutoControlPage } from '../autoControl/autoControl';
 
 @Component({
     selector: 'page-home',
@@ -75,9 +72,9 @@ export class HomePage {
         }
     }
 
-    miPerfil() {
+    miAutoControl() {
         if (this.isLogin()) {
-            this.navCtrl.push(ProfilePacientePage);
+            this.navCtrl.push(AutoControlPage);
         }
     }
 
