@@ -95,6 +95,12 @@ $mobile-app-font-path: $font-path !default;
 
 
 // COLORES
-.icon-action {
+.icon-action-default {
   color: $info;
+}
+.icon-action-success {
+  color: $success;
+}
+.icon-action-danger {
+  color: $danger;
 }

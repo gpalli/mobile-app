@@ -16,6 +16,7 @@ import { Storage } from '@ionic/storage';
 })
 export class AutoControlPesoPage implements OnDestroy {
 
+
     ngOnDestroy() {
     }
 
@@ -26,12 +27,15 @@ export class AutoControlPesoPage implements OnDestroy {
     inProgress = false;
     datosGraficar = false;
     flagPeso = false;
+
     pesoFecha;
+    pesoValor = 0;
+    ultimoPeso = 0;
 
     pacienteLocalStorage = {
         peso: {
             fecha: this.UTCToLocalTimeString(new Date()),
-            valor: '90'
+            valor: 0
         },
         grupoFactor: '1',
         pesoHistory: [{ data: [0], label: 'Peso' }],
@@ -51,8 +55,6 @@ export class AutoControlPesoPage implements OnDestroy {
     lineChartOptions = {
         responsive: true
     };
-
-
 
     lineChartType = 'line';
     lineChartColorsPresion = [{ // dark grey
@@ -89,6 +91,7 @@ export class AutoControlPesoPage implements OnDestroy {
         this.storage.get('patientStorage').then((itemFound) => {
             if (itemFound) {
                 this.pacienteLocalStorage = itemFound;
+                this.ultimoPeso = this.pacienteLocalStorage.peso.valor;
             }
             this.inProgress = false;
             this.loadChartPeso();
@@ -110,7 +113,16 @@ export class AutoControlPesoPage implements OnDestroy {
     }
 
     guardarPeso() {
+        if (!this.pesoFecha) {
+            this.toast.danger('Ingresá una fecha');
+            return;
+        }
+        if (!this.pesoValor || this.pesoValor === 0) {
+            this.toast.danger('Ingresá un valor de peso');
+            return;
+        }
         this.pacienteLocalStorage.peso.fecha = this.pesoFecha;
+        this.pacienteLocalStorage.peso.valor = this.pesoValor;
         let newPeso: any = {
             fecha: this.pacienteLocalStorage.peso.fecha,
             valor: this.pacienteLocalStorage.peso.valor
@@ -119,7 +131,9 @@ export class AutoControlPesoPage implements OnDestroy {
         this.flagPeso = false;
         this.datosGraficar = false;
         this.storage.set('patientStorage', this.pacienteLocalStorage).then((item) => {
+            this.ultimoPeso = this.pacienteLocalStorage.peso.valor;
             this.loadChartPeso();
+            this.pesoValor = this.pesoFecha = null;
             return;
         });
     }
@@ -131,7 +145,7 @@ export class AutoControlPesoPage implements OnDestroy {
     loadChartPeso() {
 
         let pesoFecha = this.pacienteLocalStorage.pesoHistory.map(dates => {
-            return dates['fecha'];
+            return dates['fecha'] || this.UTCToLocalTimeString(new Date());
         })
         let pesoData = this.pacienteLocalStorage.pesoHistory.map(values => {
             return values['valor'];
@@ -147,6 +161,7 @@ export class AutoControlPesoPage implements OnDestroy {
         this.lineChartType = 'line';
         this.datosGraficar = true;
     }
+
 
     // onInputChange(list, newType) {
     //     let last = list.length - 1;

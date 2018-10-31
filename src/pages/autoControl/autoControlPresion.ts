@@ -22,13 +22,18 @@ export class AutoControlPresionPage implements OnDestroy {
     inProgress = false;
     datosGraficar = false;
     flagPresion = true;
+    presionSistolica = '';
+    presionDiastolica = '';
     presionFecha;
+
+    ultimaPresionSistolica = '';
+    ultimaPresionDiastolica = '';
 
     pacienteLocalStorage = {
         presion: {
             fecha: this.UTCToLocalTimeString(new Date()),
-            sistolica: '120',
-            diastolica: '80'
+            sistolica: '0',
+            diastolica: '0'
         },
         grupoFactor: '1',
         presionHistory: [
@@ -108,7 +113,9 @@ export class AutoControlPresionPage implements OnDestroy {
         })
     }
 
-
+    onClear(e) {
+        return e;
+    }
 
     agregarPresion() {
         this.presionFecha = this.UTCToLocalTimeString(new Date());
@@ -128,6 +135,8 @@ export class AutoControlPresionPage implements OnDestroy {
 
     guardarPresion() {
         this.pacienteLocalStorage.presion.fecha = this.presionFecha;
+        this.pacienteLocalStorage.presion.sistolica = this.presionSistolica;
+        this.pacienteLocalStorage.presion.diastolica = this.presionDiastolica;
         let newPresion: any = {
             fecha: this.pacienteLocalStorage.presion.fecha,
             sistolica: this.pacienteLocalStorage.presion.diastolica,

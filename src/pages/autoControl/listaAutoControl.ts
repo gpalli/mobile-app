@@ -28,8 +28,8 @@ export class ListaAutoControlPage implements OnDestroy {
     pacienteLocalStorage = {
         presion: {
             fecha: this.UTCToLocalTimeString(new Date()),
-            sistolica: '120',
-            diastolica: '80'
+            sistolica: '',
+            diastolica: ''
         },
         grupoFactor: '1',
         presionHistory: [
@@ -38,7 +38,7 @@ export class ListaAutoControlPage implements OnDestroy {
         ],
         peso: {
             fecha: this.UTCToLocalTimeString(new Date()),
-            valor: '90'
+            valor: ''
         },
         pesoHistory: [{ data: [0], label: 'Peso' }],
     };
@@ -54,7 +54,7 @@ export class ListaAutoControlPage implements OnDestroy {
     loadFromLocalStorage() {
         // this.storage.set('patientStorage', null);
         this.storage.get('patientStorage').then((itemFound) => {
-            if (itemFound) {
+            if (itemFound && itemFound.peso && itemFound.presion) {
                 this.pacienteLocalStorage = itemFound;
             }
         })
