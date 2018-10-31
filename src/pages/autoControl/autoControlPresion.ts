@@ -21,7 +21,7 @@ export class AutoControlPresionPage implements OnDestroy {
 
     inProgress = false;
     datosGraficar = false;
-    flagPresion = true;
+    flagPresion = false;
     presionSistolica = '';
     presionDiastolica = '';
     presionFecha;
