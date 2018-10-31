@@ -22,7 +22,7 @@ import { RupConsultorioPage } from '../profesional/consultorio/rup-consultorio';
 import { ScanDocumentoPage } from '../profesional/mpi/scan-documento/scan-documento';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { CampaniasListPage } from '../datos-utiles/campanias/campanias-list';
-import { AutoControlPage } from '../autoControl/autoControl';
+import { ListaAutoControlPage } from '../autoControl/listaAutoControl';
 import { ProfilePacientePage } from '../../pages/profile/paciente/profile-paciente';
 
 @Component({
@@ -132,7 +132,7 @@ export class HomePage {
 
     misAutocontroles() {
         if (this.isLogin()) {
-            this.navCtrl.push(AutoControlPage);
+            this.navCtrl.push(ListaAutoControlPage);
         }
     }
 

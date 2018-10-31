@@ -1,0 +1,30 @@
+<ion-header background="dark">
+    <page-navbar>
+        <span nav-title><b>Autocontrol</b> Mis registros </span>
+    </page-navbar>
+</ion-header>
+<ion-content lista-autocontrol>
+    <ion-list>
+        <ion-item>
+            <ion-avatar item-start>
+                <ion-icon name="clipboard" class="icon-action icon-inline-xl" item-start></ion-icon>
+            </ion-avatar>
+            <h2>Mi Peso Corporal</h2>
+            <p>Último peso registrado: <b>{{ pacienteLocalStorage.peso.valor }} Kg</b></p>
+            <button ion-button clear item-end (click)="autocontrolPeso()">
+                <ion-icon name="ios-arrow-forward" class="icon-inline-xl"></ion-icon>
+            </button>
+        </ion-item>
+        <ion-item>
+            <ion-avatar item-start>
+                <ion-icon name="heart-outline" class="icon-action icon-inline-xl" item-start></ion-icon>
+            </ion-avatar>
+            <h2>Mi Presión Arterial</h2>
+            <p>Última presión registrada: <b>{{ pacienteLocalStorage.presion.sistolica }}/{{
+                    pacienteLocalStorage.presion.diastolica }} mmHg</b></p>
+            <button ion-button clear item-end (click)="autocontrolPresion()">
+                <ion-icon name="ios-arrow-forward" class="icon-inline-xl"></ion-icon>
+            </button>
+        </ion-item>
+    </ion-list>
+</ion-content>
