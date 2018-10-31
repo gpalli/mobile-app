@@ -2,7 +2,7 @@
     <page-navbar [menu]="false">
         <div buttons>
         </div>
-        <span nav-title> Mis autocontroles</span>
+        <span nav-title> <b>Autocontrol</b> | Registro de Presión Arterial</span>
     </page-navbar>
 </ion-header>
 
@@ -16,25 +16,11 @@
             <ads-icon icon="ball-triangle"></ads-icon>
         </div>
         <div class="andes-detalle-contenedor" *ngIf="!inProgress">
-
             <!-- ver que ponemos aca -->
-
         </div>
         <ion-grid>
             <ion-row>
-                <ion-col col-3>
-                    <div class="andes-container">
-
-                        <ion-icon class="icon-action left xl" name="md-calendar"></ion-icon>
-                        <div class="andes-wraper">
-                            <div class="andes-list-prefix">Último peso registrado</div>
-                            <h2 class="andes-list-title">
-                                {{pacienteLocalStorage.peso.valor}} kg
-                            </h2>
-                        </div>
-                    </div>
-                </ion-col>
-                <ion-col col-3>
+                <ion-col>
                     <div class="andes-wraper">
 
                         <ion-icon class="icon-action left xl" name="md-calendar"></ion-icon>
@@ -43,31 +29,6 @@
                             {{pacienteLocalStorage.presion.sistolica}} - {{pacienteLocalStorage.presion.diastolica}}
                         </h2>
                     </div>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="flagPeso">
-                <ion-col col-6>
-                    <ion-item>
-                        <ion-label>Fecha: </ion-label>
-                        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="pesoFecha"></ion-datetime>
-                    </ion-item>
-                </ion-col>
-                <ion-col col-6>
-                    <ion-range min="10" max="350" step="1" snaps="true" [(ngModel)]="pacienteLocalStorage.peso.valor"
-                        color="danger">
-                        <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
-                        <ion-icon range-right color="danger" name="thermometer"></ion-icon>
-                    </ion-range>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="flagPeso">
-                <ion-col col-12>
-                    <button class="md rounded block success" (click)="guardarPeso()">
-                        Guardar
-                    </button>
-                    <button class="md rounded block warning" (click)="cancelarPeso()">
-                        Cancelar
-                    </button>
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="flagPresion">
@@ -110,12 +71,7 @@
                             [options]="lineChartOptionsPresion" [colors]="lineChartColorsPresion" [chartType]="lineChartTypePresion"></canvas>
                     </div>
                 </ion-col>
-                <ion-col col-12>
-                    <div>
-                        <canvas baseChart width="800" height="600" [datasets]="lineChartData" [labels]="lineChartLabels"
-                            [options]="lineChartOptions" [colors]="lineChartColors" [chartType]="lineChartType"></canvas>
-                    </div>
-                </ion-col>
+
             </ion-row>
         </ion-grid>
     </div>

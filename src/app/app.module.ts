@@ -46,7 +46,9 @@ import { RecuperarPasswordPage } from '../pages/registro/recuperar-password/recu
 import { DomSanitizer } from '@angular/platform-browser';
 import { LaboratoriosPage } from '../pages/laboratorios/laboratorios';
 import { MapTurnosPage } from '../pages/turnos/mapa/mapa';
-import { AutoControlPage } from '../pages/autoControl/autoControl';
+import { ListaAutoControlPage } from '../pages/autoControl/listaAutoControl';
+import { AutoControlPesoPage } from '../pages/autoControl/autoControlPeso';
+import { AutoControlPresionPage } from '../pages/autoControl/autoControlPresion';
 
 import { AdsIconPage } from '../components/ads-icon/ads-icon';
 import { AdsAccordionPage } from '../components/ads-accordion/ads-accordion';
@@ -176,7 +178,9 @@ import { CampaniasProvider } from '../providers/campanias';
         MapTurnosPage,
         CampaniasListPage,
         CampaniaDetallePage,
-        AutoControlPage
+        ListaAutoControlPage,
+        AutoControlPesoPage,
+        AutoControlPresionPage
     ],
     imports: [
         BrowserModule,
@@ -248,7 +252,9 @@ import { CampaniasProvider } from '../providers/campanias';
         PuntoSaludablePage,
         CampaniasListPage,
         CampaniaDetallePage,
-        AutoControlPage
+        ListaAutoControlPage,
+        AutoControlPesoPage,
+        AutoControlPresionPage
     ],
     providers: [
         StatusBar,
