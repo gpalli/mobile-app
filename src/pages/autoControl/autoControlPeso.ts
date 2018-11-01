@@ -9,13 +9,13 @@ import { PacienteProvider } from '../../providers/paciente';
 import { ConstanteProvider } from '../../providers/constantes';
 import { ToastProvider } from '../../providers/toast';
 import { Storage } from '@ionic/storage';
+import * as moment from 'moment';
 
 @Component({
     selector: 'autoControlPeso',
     templateUrl: 'autoControlPeso.html',
 })
 export class AutoControlPesoPage implements OnDestroy {
-
 
     ngOnDestroy() {
     }
@@ -29,12 +29,15 @@ export class AutoControlPesoPage implements OnDestroy {
     flagPeso = false;
 
     pesoFecha;
-    pesoValor = 0;
-    ultimoPeso = 0;
+    pesoValor = null;
+    ultimoPeso = null;
+    ultimoPesoFecha = null;
+
+    hoy = moment().format('DD-MM-YYY');
 
     pacienteLocalStorage = {
         peso: {
-            fecha: this.UTCToLocalTimeString(new Date()),
+            fecha: moment(new Date()).format('DD-MM-YYYY hh:mm'),
             valor: 0
         },
         grupoFactor: '1',
@@ -87,11 +90,11 @@ export class AutoControlPesoPage implements OnDestroy {
     }
 
     loadFromLocalStorage() {
-        // this.storage.set('patientStorage', null);
+
         this.storage.get('patientStorage').then((itemFound) => {
             if (itemFound) {
                 this.pacienteLocalStorage = itemFound;
-                this.ultimoPeso = this.pacienteLocalStorage.peso.valor;
+                this.ultimoPeso = this.pacienteLocalStorage.peso && this.pacienteLocalStorage.peso.valor ? this.pacienteLocalStorage.peso.valor : 0;
             }
             this.inProgress = false;
             this.loadChartPeso();
@@ -99,7 +102,7 @@ export class AutoControlPesoPage implements OnDestroy {
     }
 
     agregarPeso() {
-        this.pesoFecha = this.UTCToLocalTimeString(new Date());
+        this.pesoFecha = moment(new Date()).format('DD-MM-YYYY hh:mm');
         this.flagPeso = true;
         this.datosGraficar = false
     }
@@ -144,22 +147,30 @@ export class AutoControlPesoPage implements OnDestroy {
 
     loadChartPeso() {
 
-        let pesoFecha = this.pacienteLocalStorage.pesoHistory.map(dates => {
-            return dates['fecha'] || this.UTCToLocalTimeString(new Date());
-        })
-        let pesoData = this.pacienteLocalStorage.pesoHistory.map(values => {
-            return values['valor'];
-        });
+        let pesoFecha = null;
+        let pesoData = null;
 
-        this.lineChartData = [
-            { data: pesoData, label: 'Peso' }
-        ];
-        this.lineChartLabels = pesoFecha;
-        this.lineChartOptions = {
-            responsive: true
-        };
-        this.lineChartType = 'line';
-        this.datosGraficar = true;
+        if (this.pacienteLocalStorage.pesoHistory) {
+            pesoFecha = this.pacienteLocalStorage.pesoHistory.map(dates => {
+                return dates['fecha'] || moment(new Date()).format('DD-MM-YYYY hh:mm');
+            })
+            pesoData = this.pacienteLocalStorage.pesoHistory.map(values => {
+                return values['valor'];
+            });
+            this.lineChartData = [
+                { data: pesoData, label: 'Peso' }
+            ];
+            this.lineChartLabels = pesoFecha;
+            this.lineChartOptions = {
+                responsive: true
+            };
+            this.lineChartType = 'line';
+            this.datosGraficar = true;
+
+            this.ultimoPeso = pesoData[pesoData.length - 1];
+            this.ultimoPesoFecha = pesoFecha[pesoFecha.length - 1];
+        }
+
     }
 
 

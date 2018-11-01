@@ -11,6 +11,7 @@ import { ToastProvider } from '../../providers/toast';
 import { Storage } from '@ionic/storage';
 import { AutoControlPesoPage } from './autoControlPeso';
 import { AutoControlPresionPage } from './autoControlPresion';
+import * as moment from 'moment';
 
 @Component({
     selector: 'listaAutoControl',
@@ -27,7 +28,7 @@ export class ListaAutoControlPage implements OnDestroy {
 
     pacienteLocalStorage = {
         presion: {
-            fecha: this.UTCToLocalTimeString(new Date()),
+            fecha: moment(new Date()).format('DD-MM-YYYY hh:mm'),
             sistolica: '',
             diastolica: ''
         },
@@ -37,7 +38,7 @@ export class ListaAutoControlPage implements OnDestroy {
             { data: [0], label: 'Diastólica' }
         ],
         peso: {
-            fecha: this.UTCToLocalTimeString(new Date()),
+            fecha: moment(new Date()).format('DD-MM-YYYY hh:mm'),
             valor: ''
         },
         pesoHistory: [{ data: [0], label: 'Peso' }],
@@ -54,7 +55,7 @@ export class ListaAutoControlPage implements OnDestroy {
     loadFromLocalStorage() {
         // this.storage.set('patientStorage', null);
         this.storage.get('patientStorage').then((itemFound) => {
-            if (itemFound && itemFound.peso && itemFound.presion) {
+            if (itemFound) {
                 this.pacienteLocalStorage = itemFound;
             }
         })

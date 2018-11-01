@@ -25,40 +25,44 @@
             </h2>
         </div>
         <p *ngIf="!ultimoPeso">
-            No hay registros de peso
+            No hay registros
         </p>
         <button ion-button outline item-end (click)="flagPeso = true">
-            Registrar nuevo peso
+            Registrar nuevo
         </button>
     </ion-item>
     <ion-grid>
         <ion-row *ngIf="flagPeso">
-            <ion-col>
+            <ion-col col-12>
                 <ion-item>
-                    <ion-label>Fecha: </ion-label>
-                    <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="pesoFecha"></ion-datetime>
+                    <ion-label stacked>Fecha: </ion-label>
+                    <ion-datetime displayFormat="DD/MM/YYYY HH:mm" doneText="Aceptar" cancelText="Cancelar" placeholder="tocá para ingresar una fecha"
+                        [(ngModel)]="pesoFecha"></ion-datetime>
                 </ion-item>
             </ion-col>
-            <ion-col>
-                <ion-input [(ngModel)]="pesoValor" placeholder="peso" type="number" (ionClear)="onClear($event)"
-                    ionic-input-clearable></ion-input>
+            <ion-col col-12>
+                <ion-item>
+                    <ion-label stacked>Peso: </ion-label>
+                    <ion-input [(ngModel)]="pesoValor" placeholder="peso en kilogramos" type="number" (ionClear)="onClear($event)"
+                        ionic-input-clearable></ion-input>
+                </ion-item>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="flagPeso">
-            <ion-col col-12>
-                <ion-list>
-                    <ion-item>
-                        <button ion-button clear item-start (click)="cancelarPeso()">
-                            <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
-                        </button>
-                        <button ion-button clear item-end (click)="guardarPeso()">
-                            <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
-                        </button>
-                    </ion-item>
-                </ion-list>
+            <ion-col>
+                <ion-item class="item-lg">
+                    <button ion-button clear item-start (click)="cancelarPeso()">
+                        <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
+                        <!-- Cancelar -->
+                    </button>
+                    <button ion-button clear item-end (click)="guardarPeso()">
+                        <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
+                        <!-- Guardar -->
+                    </button>
+                </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="datosGraficar">
+        <ion-row *ngIf="datosGraficar && pacienteLocalStorage?.pesoHistory?.length">
             <ion-col col-12>
                 <div>
                     <canvas baseChart width="800" height="600" [datasets]="lineChartData" [labels]="lineChartLabels"
@@ -66,7 +70,6 @@
                 </div>
             </ion-col>
         </ion-row>
-
     </ion-grid>
 
 </ion-content>

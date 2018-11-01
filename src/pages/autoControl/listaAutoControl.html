@@ -11,7 +11,9 @@
             </ion-avatar>
             <h2>Mi Peso Corporal</h2>
             <p *ngIf="pacienteLocalStorage?.peso?.valor">
-                Último peso registrado: <b>{{ pacienteLocalStorage.peso.valor }} Kg</b></p>
+                Último peso registrado: <b>{{ pacienteLocalStorage.peso.valor }} Kg</b>
+                <span class="badge badge-info sm">{{ pacienteLocalStorage.peso.fecha }}</span>
+            </p>
             <button ion-button clear item-end (click)="autocontrolPeso()">
                 <ion-icon name="ios-arrow-forward" class="icon-inline-xl"></ion-icon>
             </button>
@@ -23,7 +25,9 @@
             <h2>Mi Presión Arterial</h2>
             <p *ngIf="pacienteLocalStorage?.presion?.sistolica">
                 Última presión registrada: <b>{{ pacienteLocalStorage.presion.sistolica }}/{{
-                    pacienteLocalStorage.presion.diastolica }} mmHg</b></p>
+                    pacienteLocalStorage.presion.diastolica }} mmHg</b>
+                <span class="badge badge-info">{{ pacienteLocalStorage.presion.fecha }}</span>
+            </p>
             <button ion-button clear item-end (click)="autocontrolPresion()">
                 <ion-icon name="ios-arrow-forward" class="icon-inline-xl"></ion-icon>
             </button>

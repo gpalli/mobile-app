@@ -10,6 +10,8 @@ import { ConstanteProvider } from '../../providers/constantes';
 import { ToastProvider } from '../../providers/toast';
 import { Storage } from '@ionic/storage';
 
+import * as moment from 'moment';
+
 @Component({
     selector: 'autoControlPresion',
     templateUrl: 'autoControlPresion.html',
@@ -22,28 +24,31 @@ export class AutoControlPresionPage implements OnDestroy {
     inProgress = false;
     datosGraficar = false;
     flagPresion = false;
-    presionSistolica = '';
-    presionDiastolica = '';
+    presionSistolica = null;
+    presionDiastolica = null;
     presionFecha;
 
-    ultimaPresionSistolica = '';
-    ultimaPresionDiastolica = '';
+    ultimaPresionSistolica = null;
+    ultimaPresionDiastolica = null;
+    ultimaPresionFecha = null;
+
+    hoy = moment().format('DD-MM-YYY');
 
     pacienteLocalStorage = {
         presion: {
-            fecha: this.UTCToLocalTimeString(new Date()),
-            sistolica: '0',
-            diastolica: '0'
+            fecha: moment(new Date()).format('DD-MM-YYYY hh:mm'),
+            sistolica: 0,
+            diastolica: 0
         },
         grupoFactor: '1',
         presionHistory: [
-            { data: [0], label: 'Sistólica' },
-            { data: [0], label: 'Diastólica' }
+            { data: [0], label: 'Sistólica', fecha: moment(new Date()).format('DD-MM-YYYY hh:mm') },
+            { data: [0], label: 'Diastólica', fecha: moment(new Date()).format('DD-MM-YYYY hh:mm') }
         ]
     };
 
     lineChartData = [{ data: [], label: '' }];
-    lineChartDataPresion = [{ data: [], label: '' }];
+    lineChartDataPresion = [{ data: [], label: '', fecha: null }];
     lineChartLabels = [];
     lineChartColors = [{
         backgroundColor: 'rgba(103, 58, 183, .1)',
@@ -118,30 +123,37 @@ export class AutoControlPresionPage implements OnDestroy {
     }
 
     agregarPresion() {
-        this.presionFecha = this.UTCToLocalTimeString(new Date());
+        this.presionFecha = moment(new Date()).format('DD-MM-YYYY hh:mm');
         this.flagPresion = true;
         this.datosGraficar = false;
     }
 
-    // Función para convertir a fecha y hora actual y que sea reconocido por el componente (ya que siempre espera ISOString)
-    UTCToLocalTimeString(d: Date) {
-        let timeOffsetInHours = (d.getTimezoneOffset() / 60) * (-1);
-        d.setHours(d.getHours() + timeOffsetInHours);
-
-        return d.toISOString();
-    }
-
-
-
     guardarPresion() {
+
+        if (!this.presionFecha) {
+            this.toast.danger('Ingresá la fecha de registro');
+            return;
+        }
+        if (!this.presionSistolica || this.presionSistolica === 0) {
+            this.toast.danger('Ingresá tu presión sistólica');
+            return;
+        }
+
+        if (!this.presionDiastolica || this.presionDiastolica === 0) {
+            this.toast.danger('Ingresá tu presión diastólica');
+            return;
+        }
+
         this.pacienteLocalStorage.presion.fecha = this.presionFecha;
         this.pacienteLocalStorage.presion.sistolica = this.presionSistolica;
         this.pacienteLocalStorage.presion.diastolica = this.presionDiastolica;
+
         let newPresion: any = {
             fecha: this.pacienteLocalStorage.presion.fecha,
             sistolica: this.pacienteLocalStorage.presion.diastolica,
             diastolica: this.pacienteLocalStorage.presion.sistolica
         };
+
         this.pacienteLocalStorage.presionHistory.push(newPresion);
         this.flagPresion = false;
         this.datosGraficar = false;
@@ -150,26 +162,37 @@ export class AutoControlPresionPage implements OnDestroy {
             return;
         });
     }
+
     cancelarPresion() {
         this.flagPresion = false;
-        this.navCtrl.pop();
+        // this.navCtrl.pop();
     }
 
     loadChartPresion() {
 
-        let presionSistolicaData = this.pacienteLocalStorage.presionHistory.map(sistolicas => {
-            return sistolicas['sistolica']
-        });
-        let presionDiastolicaData = this.pacienteLocalStorage.presionHistory.map(diastolicas => {
-            return diastolicas['diastolica']
-        });
-        let presionFecha = this.pacienteLocalStorage.presionHistory.map(dates => {
-            return dates['fecha']
-        })
+        let presionSistolicaData = null;
+        let presionDiastolicaData = null;
+        let presionFecha = null;
+        if (this.pacienteLocalStorage.presionHistory) {
+            presionSistolicaData = this.pacienteLocalStorage.presionHistory.map(sistolicas => {
+                return sistolicas['sistolica']
+            });
+            presionDiastolicaData = this.pacienteLocalStorage.presionHistory.map(diastolicas => {
+                return diastolicas['diastolica']
+            });
+            presionFecha = this.pacienteLocalStorage.presionHistory.map(dates => {
+                return moment(dates['fecha']).format('DD-MM-YYYY hh:mm')
+            })
+
+            this.ultimaPresionSistolica = presionSistolicaData[presionSistolicaData.length - 1];
+            this.ultimaPresionDiastolica = presionDiastolicaData[presionDiastolicaData.length - 1];
+            this.ultimaPresionFecha = presionFecha[presionFecha.length - 1];
+
+        }
 
         this.lineChartDataPresion = [
-            { data: presionSistolicaData, label: 'Sistólica' },
-            { data: presionDiastolicaData, label: 'Diastólica' }
+            { data: presionSistolicaData, label: 'Sistólica', fecha: moment().format('DD-MM-YYYY hh:mm') },
+            { data: presionDiastolicaData, label: 'Diastólica', fecha: moment().format('DD-MM-YYYY hh:mm') }
         ];
         this.lineChartLabelsPresion = presionFecha;
         this.lineChartOptionsPresion = {
