@@ -158,7 +158,7 @@ export class ProfilePacientePage {
                 // Con los datos iniciales
                 this.storage.set('patientStorage', this.pacienteLocalStorage)
             }
-            this.toast.danger('Grupo Sanguineo actualizado');
+            this.toast.success('Grupo Sanguineo actualizado');
         });
     }
 
