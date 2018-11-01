@@ -1,13 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { NavController, NavParams, LoadingController, MenuController, Platform, AlertController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 
 
 // providers
 import { AuthProvider } from '../../providers/auth/auth';
-import { PacienteProvider } from '../../providers/paciente';
-import { ConstanteProvider } from '../../providers/constantes';
-import { ToastProvider } from '../../providers/toast';
 import { Storage } from '@ionic/storage';
 import { AutoControlPesoPage } from './autoControlPeso';
 import { AutoControlPresionPage } from './autoControlPresion';
@@ -28,7 +24,7 @@ export class ListaAutoControlPage implements OnDestroy {
 
     pacienteLocalStorage = {
         presion: {
-            fecha: moment(new Date()).format('DD-MM-YYYY hh:mm'),
+            fecha: moment(new Date()).format('DD-MM-YYYY HH:mm'),
             sistolica: '',
             diastolica: ''
         },
@@ -38,7 +34,7 @@ export class ListaAutoControlPage implements OnDestroy {
             { data: [0], label: 'Diastólica' }
         ],
         peso: {
-            fecha: moment(new Date()).format('DD-MM-YYYY hh:mm'),
+            fecha: moment(new Date()).format('DD-MM-YYYY HH:mm'),
             valor: ''
         },
         pesoHistory: [{ data: [0], label: 'Peso' }],
