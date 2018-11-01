@@ -123,6 +123,10 @@ import { NoticiasProvider } from '../providers/noticias';
 import { CheckerGpsProvider } from '../providers/locations/checkLocation';
 import { CampaniasProvider } from '../providers/campanias';
 
+import localeSpanish from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeSpanish, 'es');
+
 @NgModule({
     declarations: [
         MyApp,
@@ -288,7 +292,7 @@ import { CampaniasProvider } from '../providers/campanias';
         ErrorReporterProvider,
         Geolocation,
         NativeGeocoder,
-        // { provide: LOCALE_ID, useValue: 'es-ES' },
+        { provide: LOCALE_ID, useValue: 'es' },
         Camera,
         Crop,
         ImageResizer,
