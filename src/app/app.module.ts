@@ -126,6 +126,9 @@ import { CampaniasProvider } from '../providers/campanias';
 
 import localeSpanish from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { LineChartComponent } from '../pages/01_line_chart/line-chart.component';
+
+
 registerLocaleData(localeSpanish, 'es');
 
 @NgModule({
@@ -186,7 +189,8 @@ registerLocaleData(localeSpanish, 'es');
         ListaAutoControlPage,
         AutoControlPesoPage,
         AutoControlPresionPage,
-        AutoControlTallaPage
+        AutoControlTallaPage,
+        LineChartComponent
     ],
     imports: [
         BrowserModule,
@@ -261,7 +265,8 @@ registerLocaleData(localeSpanish, 'es');
         ListaAutoControlPage,
         AutoControlPesoPage,
         AutoControlPresionPage,
-        AutoControlTallaPage
+        AutoControlTallaPage,
+        LineChartComponent
     ],
     providers: [
         StatusBar,

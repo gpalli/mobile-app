@@ -6,14 +6,12 @@
     </page-navbar>
 </ion-header>
 
+
+
 <ion-content profile-paciente>
     <div class="no-item" *ngIf="inProgress">
         <ads-icon icon="ball-triangle"></ads-icon>
     </div>
-
-    <!-- <div class="no-item" *ngIf="inProgress">
-            <ads-icon icon="ball-triangle"></ads-icon>
-        </div> -->
 
     <ion-item>
         <ion-avatar item-start>
@@ -49,28 +47,26 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="flagPeso">
-            <ion-col>
-                <ion-item class="item-lg">
-                    <button ion-button clear item-start (click)="cancelarPeso()">
-                        <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
-                        <!-- Cancelar -->
-                    </button>
-                    <button ion-button clear item-end (click)="guardarPeso()">
-                        <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
-                        <!-- Guardar -->
-                    </button>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="datosGraficar && pacienteLocalStorage?.historico?.length">
             <ion-col col-12>
-                <div>
-                    <canvas baseChart width="800" height="600" [datasets]="lineChartData" [labels]="lineChartLabels"
-                        [options]="lineChartOptions" [colors]="lineChartColors" (chartHover)="onChartHover($event)"
-                        [chartType]="lineChartType"></canvas>
-                </div>
+                <button ion-button clear item-start (click)="cancelarPeso()">
+                    <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
+                </button>
+                <button ion-button clear item-end (click)="guardarPeso()">
+                    <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
+                </button>
             </ion-col>
         </ion-row>
+        <!-- <ion-row *ngIf="datosGraficar && pacienteLocalStorage?.historico?.length">
+            <ion-col col-12> -->
+        <!-- <div>
+            <canvas baseChart width="800" height="600" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                [colors]="lineChartColors" (chartHover)="onChartHover($event)" [chartType]="lineChartType"></canvas>
+
+        </div> -->
+
+        <!-- </ion-col>
+        </ion-row> -->
+        <app-line-chart *ngIf="data && datosGraficar" [data]="data" xAxisText="Peso (Kg)"></app-line-chart>
         <br>
         <ion-row *ngIf="ultimoPeso">
             <ion-col>
@@ -81,9 +77,6 @@
                     <span class="text-sm">
                         Eliminar último<br>registro de Peso
                     </span>
-                    <!-- <button ion-button clear item-end (click)="guardarPeso()">
-                            <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
-                    </button> -->
                 </ion-item>
             </ion-col>
         </ion-row>

@@ -2,7 +2,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NavController, NavParams, LoadingController, MenuController, Platform, AlertController } from 'ionic-angular';
 
-
 // providers
 import { AuthProvider } from '../../providers/auth/auth';
 import { PacienteProvider } from '../../providers/paciente';
@@ -16,6 +15,7 @@ import * as moment from 'moment';
     templateUrl: 'autoControlPeso.html',
 })
 export class AutoControlPesoPage implements OnDestroy {
+    data: any[];
 
     ngOnDestroy() {
     }
@@ -38,7 +38,7 @@ export class AutoControlPesoPage implements OnDestroy {
     pacienteLocalStorage = {
         fecha: null,
         valor: 0,
-        historico: [{ data: [0], label: 'Peso' }],
+        historico: [{ fecha: new Date(), valor: null }],
     };
 
     lineChartData = [{ data: [], label: '' }];
@@ -79,11 +79,13 @@ export class AutoControlPesoPage implements OnDestroy {
         public assetProvider: ConstanteProvider,
         public toast: ToastProvider,
         public platform: Platform
-    ) { }
+    ) {
+
+    }
 
     ionViewDidLoad() {
         this.inProgress = true;
-        this.loadFromLocalStorage()
+        this.loadFromLocalStorage();
     }
 
     loadFromLocalStorage() {
@@ -91,17 +93,22 @@ export class AutoControlPesoPage implements OnDestroy {
         this.storage.get('patientStorage.peso').then((itemFound) => {
             if (itemFound) {
                 this.pacienteLocalStorage = itemFound;
+                this.data = this.pacienteLocalStorage.historico.filter(x => typeof x.fecha !== 'undefined').map(y => ({ date: new Date(y.fecha), value: parseFloat(y.valor) }));
+                this.data.sort((a, b) => b.date - a.date);
+                console.log(this.data);
+
                 this.ultimoPeso = this.pacienteLocalStorage && this.pacienteLocalStorage.valor ? this.pacienteLocalStorage.valor : 0;
             }
             this.inProgress = false;
-            this.loadChartPeso();
+            this.datosGraficar = true;
+            // this.loadChartPeso();
         })
     }
 
     agregarPeso() {
         this.pesoFecha = moment(new Date()).format('ll hh:mm');
         this.flagPeso = true;
-        this.datosGraficar = false
+        this.datosGraficar = false;
     }
 
     guardarPeso() {
@@ -131,7 +138,6 @@ export class AutoControlPesoPage implements OnDestroy {
     }
     cancelarPeso() {
         this.flagPeso = false;
-        // this.navCtrl.pop();
     }
 
     loadChartPeso() {
@@ -196,7 +202,5 @@ export class AutoControlPesoPage implements OnDestroy {
 
     }
 
-
-
-
 }
+
