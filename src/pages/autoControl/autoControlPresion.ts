@@ -35,13 +35,10 @@ export class AutoControlPresionPage implements OnDestroy {
     hoy = moment().format('DD-MM-YYY');
 
     pacienteLocalStorage = {
-        presion: {
-            fecha: moment(new Date()).format('DD-MM-YYYY hh:mm'),
-            sistolica: 0,
-            diastolica: 0
-        },
-        grupoFactor: '1',
-        presionHistory: [
+        fecha: null,
+        sistolica: 0,
+        diastolica: 0,
+        historico: [
             { data: [0], label: 'Sistólica', fecha: moment(new Date()).format('DD-MM-YYYY hh:mm') },
             { data: [0], label: 'Diastólica', fecha: moment(new Date()).format('DD-MM-YYYY hh:mm') }
         ]
@@ -109,7 +106,7 @@ export class AutoControlPresionPage implements OnDestroy {
 
     loadFromLocalStorage() {
         // this.storage.set('patientStorage', null);
-        this.storage.get('patientStorage').then((itemFound) => {
+        this.storage.get('patientStorage.presion').then((itemFound) => {
             if (itemFound) {
                 this.pacienteLocalStorage = itemFound;
             }
@@ -123,7 +120,7 @@ export class AutoControlPresionPage implements OnDestroy {
     }
 
     agregarPresion() {
-        this.presionFecha = moment(new Date()).format('DD-MM-YYYY hh:mm');
+        this.presionFecha = moment(new Date()).format('ll hh:mm');
         this.flagPresion = true;
         this.datosGraficar = false;
     }
@@ -144,20 +141,20 @@ export class AutoControlPresionPage implements OnDestroy {
             return;
         }
 
-        this.pacienteLocalStorage.presion.fecha = this.presionFecha;
-        this.pacienteLocalStorage.presion.sistolica = this.presionSistolica;
-        this.pacienteLocalStorage.presion.diastolica = this.presionDiastolica;
+        this.pacienteLocalStorage.fecha = this.presionFecha;
+        this.pacienteLocalStorage.sistolica = this.presionSistolica;
+        this.pacienteLocalStorage.diastolica = this.presionDiastolica;
 
         let newPresion: any = {
-            fecha: this.pacienteLocalStorage.presion.fecha,
-            sistolica: this.pacienteLocalStorage.presion.diastolica,
-            diastolica: this.pacienteLocalStorage.presion.sistolica
+            fecha: this.pacienteLocalStorage.fecha,
+            sistolica: this.pacienteLocalStorage.diastolica,
+            diastolica: this.pacienteLocalStorage.sistolica
         };
 
-        this.pacienteLocalStorage.presionHistory.push(newPresion);
+        this.pacienteLocalStorage.historico.push(newPresion);
         this.flagPresion = false;
         this.datosGraficar = false;
-        this.storage.set('patientStorage', this.pacienteLocalStorage).then((item) => {
+        this.storage.set('patientStorage.presion', this.pacienteLocalStorage).then((item) => {
             this.loadChartPresion();
             return;
         });
@@ -173,15 +170,15 @@ export class AutoControlPresionPage implements OnDestroy {
         let presionSistolicaData = null;
         let presionDiastolicaData = null;
         let presionFecha = null;
-        if (this.pacienteLocalStorage.presionHistory) {
-            presionSistolicaData = this.pacienteLocalStorage.presionHistory.map(sistolicas => {
+        if (this.pacienteLocalStorage.historico) {
+            presionSistolicaData = this.pacienteLocalStorage.historico.map(sistolicas => {
                 return sistolicas['sistolica']
             });
-            presionDiastolicaData = this.pacienteLocalStorage.presionHistory.map(diastolicas => {
+            presionDiastolicaData = this.pacienteLocalStorage.historico.map(diastolicas => {
                 return diastolicas['diastolica']
             });
-            presionFecha = this.pacienteLocalStorage.presionHistory.map(dates => {
-                return moment(dates['fecha']).format('DD-MM-YYYY hh:mm')
+            presionFecha = this.pacienteLocalStorage.historico.map(dates => {
+                return moment(dates['fecha']).format('ll hh:mm')
             })
 
             this.ultimaPresionSistolica = presionSistolicaData[presionSistolicaData.length - 1];
@@ -191,8 +188,8 @@ export class AutoControlPresionPage implements OnDestroy {
         }
 
         this.lineChartDataPresion = [
-            { data: presionSistolicaData, label: 'Sistólica', fecha: moment().format('DD-MM-YYYY hh:mm') },
-            { data: presionDiastolicaData, label: 'Diastólica', fecha: moment().format('DD-MM-YYYY hh:mm') }
+            { data: presionSistolicaData, label: 'Sistólica', fecha: moment().format('ll hh:mm') },
+            { data: presionDiastolicaData, label: 'Diastólica', fecha: moment().format('ll hh:mm') }
         ];
         this.lineChartLabelsPresion = presionFecha;
         this.lineChartOptionsPresion = {
@@ -202,16 +199,37 @@ export class AutoControlPresionPage implements OnDestroy {
         this.datosGraficar = true;
     }
 
-    // onInputChange(list, newType) {
-    //     let last = list.length - 1;
-    //     if (list[last].valor.length > 0) {
-    //         list.push({ tipo: newType, valor: '' });
-    //     } else if (list.length > 1 && list[last - 1].valor.length === 0) {
-    //         list.pop();
-    //     }
-    // }
 
+    eliminarPresion() {
 
+        let alert = this.alertCtrl.create({
+            title: 'Confirmar',
+            message: '¿Eliminar último registro de presión?',
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                    handler: () => {
+                    }
+                },
+                {
+                    text: 'Eliminar',
+                    handler: () => {
+                        this.pacienteLocalStorage.historico.pop();
+                        this.storage.set('patientStorage.talla', this.pacienteLocalStorage).then((item) => {
+                            this.ultimaPresionSistolica = this.pacienteLocalStorage.sistolica;
+                            this.ultimaPresionDiastolica = this.pacienteLocalStorage.diastolica;
+                            this.loadChartPresion();
+                            this.presionSistolica = this.presionDiastolica = this.presionFecha = null;
+                            return;
+                        });
+                    }
+                }
+            ]
+        });
+        alert.present();
+
+    }
 
 
 }

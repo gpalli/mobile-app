@@ -15,7 +15,7 @@
             <ion-icon name="heart-outline" class="icon-action-default icon-inline-xl"></ion-icon>
         </ion-avatar>
         <div *ngIf="ultimaPresionSistolica && ultimaPresionDiastolica" class="andes-list-prefix">Última registrada
-            <h2 class="valor-longitudinal-md">
+            <h2 class="valor-longitudinal-sm">
                 {{ ultimaPresionSistolica }} - {{ ultimaPresionDiastolica }} mm/Hg
             </h2>
         </div>
@@ -65,29 +65,39 @@
         </ion-row>
         <ion-row *ngIf="flagPresion">
             <ion-col col-12>
-                <ion-list>
-                    <ion-item>
-                        <button ion-button clear item-start (click)="cancelarPresion()">
-                            <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
-                            <!-- Cancelar -->
-                        </button>
-                        <button ion-button clear item-end (click)="guardarPresion()">
-                            <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
-                            <!-- Guardar -->
-                        </button>
-                    </ion-item>
-                </ion-list>
+                <ion-item class="item-lg">
+                    <button ion-button clear item-start (click)="cancelarPresion()">
+                        <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
+                        <!-- Cancelar -->
+                    </button>
+                    <button ion-button clear item-end (click)="guardarPresion()">
+                        <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
+                        <!-- Guardar -->
+                    </button>
+                </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="datosGraficar && pacienteLocalStorage?.presionHistory?.length">
+        <br>
+        <ion-row *ngIf="datosGraficar && pacienteLocalStorage?.historico?.length">
             <ion-col col-12>
                 <div>
                     <canvas baseChart width="800" height="600" [datasets]="lineChartDataPresion" [labels]="lineChartLabelsPresion"
                         [options]="lineChartOptionsPresion" [colors]="lineChartColorsPresion" [chartType]="lineChartTypePresion"></canvas>
                 </div>
             </ion-col>
-
+        </ion-row>
+        <br>
+        <ion-row *ngIf="ultimaPresionSistolica && ultimaPresionDiastolica">
+            <ion-col>
+                <ion-item class="item-lg">
+                    <button ion-button clear item-start (click)="eliminarPresion()">
+                        <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
+                    </button>
+                    <span class="text-sm">
+                        Eliminar último<br>registro de Presión
+                    </span>
+                </ion-item>
+            </ion-col>
         </ion-row>
     </ion-grid>
-
 </ion-content>

@@ -12,10 +12,10 @@ import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
 
 @Component({
-    selector: 'autoControlPeso',
-    templateUrl: 'autoControlPeso.html',
+    selector: 'autoControlTalla',
+    templateUrl: 'autoControlTalla.html',
 })
-export class AutoControlPesoPage implements OnDestroy {
+export class AutoControlTallaPage implements OnDestroy {
 
     ngOnDestroy() {
     }
@@ -26,19 +26,19 @@ export class AutoControlPesoPage implements OnDestroy {
 
     inProgress = false;
     datosGraficar = false;
-    flagPeso = false;
+    flagTalla = false;
 
-    pesoFecha;
-    pesoValor = null;
-    ultimoPeso = null;
-    ultimoPesoFecha = null;
+    tallaFecha;
+    tallaValor = null;
+    ultimaTalla = null;
+    ultimaTallaFecha = null;
 
     hoy = moment().format('DD-MM-YYY');
 
     pacienteLocalStorage = {
         fecha: null,
         valor: 0,
-        historico: [{ data: [0], label: 'Peso' }],
+        historico: [{ data: [0], label: 'Talla' }],
     };
 
     lineChartData = [{ data: [], label: '' }];
@@ -88,86 +88,85 @@ export class AutoControlPesoPage implements OnDestroy {
 
     loadFromLocalStorage() {
 
-        this.storage.get('patientStorage.peso').then((itemFound) => {
+        this.storage.get('patientStorage.talla').then((itemFound) => {
             if (itemFound) {
                 this.pacienteLocalStorage = itemFound;
-                this.ultimoPeso = this.pacienteLocalStorage && this.pacienteLocalStorage.valor ? this.pacienteLocalStorage.valor : 0;
+                this.ultimaTalla = this.pacienteLocalStorage && this.pacienteLocalStorage.valor ? this.pacienteLocalStorage.valor : 0;
             }
             this.inProgress = false;
-            this.loadChartPeso();
+            this.loadChartTalla();
         })
     }
 
-    agregarPeso() {
-        this.pesoFecha = moment(new Date()).format('ll hh:mm');
-        this.flagPeso = true;
+    agregarTalla() {
+        this.tallaFecha = moment(new Date()).format('ll hh:mm');
+        this.flagTalla = true;
         this.datosGraficar = false
     }
 
-    guardarPeso() {
-        if (!this.pesoFecha) {
+    guardarTalla() {
+        if (!this.tallaFecha) {
             this.toast.danger('Ingresá una fecha');
             return;
         }
-        if (!this.pesoValor || this.pesoValor === 0) {
-            this.toast.danger('Ingresá un valor de peso');
+        if (!this.tallaValor || this.tallaValor === 0) {
+            this.toast.danger('Ingresá un valor de talla');
             return;
         }
-        this.pacienteLocalStorage.fecha = this.pesoFecha;
-        this.pacienteLocalStorage.valor = this.pesoValor;
-        let newPeso: any = {
+        this.pacienteLocalStorage.fecha = this.tallaFecha;
+        this.pacienteLocalStorage.valor = this.tallaValor;
+        let newTalla: any = {
             fecha: this.pacienteLocalStorage.fecha,
             valor: this.pacienteLocalStorage.valor
         };
-        this.pacienteLocalStorage.historico.push(newPeso);
-        this.flagPeso = false;
+        this.pacienteLocalStorage.historico.push(newTalla);
+        this.flagTalla = false;
         this.datosGraficar = false;
-        this.storage.set('patientStorage.peso', this.pacienteLocalStorage).then((item) => {
-            this.ultimoPeso = this.pacienteLocalStorage.valor;
-            this.loadChartPeso();
-            this.pesoValor = this.pesoFecha = null;
+        this.storage.set('patientStorage.talla', this.pacienteLocalStorage).then((item) => {
+            this.ultimaTalla = this.pacienteLocalStorage.valor;
+            this.loadChartTalla();
+            this.tallaValor = this.tallaFecha = null;
             return;
         });
     }
-    cancelarPeso() {
-        this.flagPeso = false;
+    cancelarTalla() {
+        this.flagTalla = false;
         // this.navCtrl.pop();
     }
 
-    loadChartPeso() {
+    loadChartTalla() {
 
-        let pesoFecha = null;
-        let pesoData = null;
+        let tallaFecha = null;
+        let tallaData = null;
 
         if (this.pacienteLocalStorage.historico) {
-            pesoFecha = this.pacienteLocalStorage.historico.map(dates => {
+            tallaFecha = this.pacienteLocalStorage.historico.map(dates => {
                 return moment(dates['fecha']).format('ll hh:mm') || moment(new Date()).format('ll hh:mm');
             })
-            pesoData = this.pacienteLocalStorage.historico.map(values => {
+            tallaData = this.pacienteLocalStorage.historico.map(values => {
                 return values['valor'];
             });
             this.lineChartData = [
-                { data: pesoData, label: 'Peso' }
+                { data: tallaData, label: 'Talla' }
             ];
-            this.lineChartLabels = pesoFecha;
+            this.lineChartLabels = tallaFecha;
             this.lineChartOptions = {
                 responsive: true
             };
             this.lineChartType = 'line';
             this.datosGraficar = true;
 
-            this.ultimoPeso = pesoData[pesoData.length - 1];
-            this.ultimoPesoFecha = pesoFecha[pesoFecha.length - 1];
+            this.ultimaTalla = tallaData[tallaData.length - 1];
+            this.ultimaTallaFecha = tallaFecha[tallaFecha.length - 1];
         }
 
     }
 
-
-    eliminarPeso() {
+    eliminarTalla() {
 
         let alert = this.alertCtrl.create({
             title: 'Confirmar',
-            message: '¿Eliminar último registro de peso?',
+            message: '¿Eliminar último registro de talla?',
             buttons: [
                 {
                     text: 'Cancelar',
@@ -180,9 +179,9 @@ export class AutoControlPesoPage implements OnDestroy {
                     handler: () => {
                         this.pacienteLocalStorage.historico.pop();
                         this.storage.set('patientStorage.talla', this.pacienteLocalStorage).then((item) => {
-                            this.ultimoPeso = this.pacienteLocalStorage.valor;
-                            this.loadChartPeso();
-                            this.pesoValor = this.pesoFecha = null;
+                            this.ultimaTalla = this.pacienteLocalStorage.valor;
+                            this.loadChartTalla();
+                            this.tallaValor = this.tallaFecha = null;
                             return;
                         });
                     }
@@ -192,8 +191,6 @@ export class AutoControlPesoPage implements OnDestroy {
         alert.present();
 
     }
-
-
 
 
 }

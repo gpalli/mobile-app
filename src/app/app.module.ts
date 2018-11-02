@@ -49,6 +49,7 @@ import { MapTurnosPage } from '../pages/turnos/mapa/mapa';
 import { ListaAutoControlPage } from '../pages/autoControl/listaAutoControl';
 import { AutoControlPesoPage } from '../pages/autoControl/autoControlPeso';
 import { AutoControlPresionPage } from '../pages/autoControl/autoControlPresion';
+import { AutoControlTallaPage } from '../pages/autoControl/autoControlTalla';
 
 import { AdsIconPage } from '../components/ads-icon/ads-icon';
 import { AdsAccordionPage } from '../components/ads-accordion/ads-accordion';
@@ -184,7 +185,8 @@ registerLocaleData(localeSpanish, 'es');
         CampaniaDetallePage,
         ListaAutoControlPage,
         AutoControlPesoPage,
-        AutoControlPresionPage
+        AutoControlPresionPage,
+        AutoControlTallaPage
     ],
     imports: [
         BrowserModule,
@@ -258,7 +260,8 @@ registerLocaleData(localeSpanish, 'es');
         CampaniaDetallePage,
         ListaAutoControlPage,
         AutoControlPesoPage,
-        AutoControlPresionPage
+        AutoControlPresionPage,
+        AutoControlTallaPage
     ],
     providers: [
         StatusBar,

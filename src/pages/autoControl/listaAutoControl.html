@@ -5,32 +5,46 @@
 </ion-header>
 <ion-content lista-autocontrol>
     <ion-list>
-        <ion-item>
+        <ion-item (click)="autocontrolPeso()">
             <ion-avatar item-start>
                 <ion-icon name="clipboard" class="icon-action-default icon-inline-xl" item-start></ion-icon>
             </ion-avatar>
             <h2>Mi Peso Corporal</h2>
-            <p *ngIf="pacienteLocalStorage?.peso?.valor">
-                Último peso registrado: <b>{{ pacienteLocalStorage.peso.valor }} Kg</b>
-                <span class="badge badge-info sm">
-                    {{ pacienteLocalStorage.peso.fecha | date: "d 'de' MMMM 'del' yyyy 'a las' HH:mm" }}</span>
+            <span *ngIf="ultimoPeso?.fecha" class="badge badge-info sm inline">
+                {{ ultimoPeso.fecha | date: "d MMM yyyy, HH:mm 'hs'" }}</span>
+            <p *ngIf="ultimoPeso?.valor">
+                Último peso registrado: <b>{{ ultimoPeso.valor }} Kg</b>
             </p>
-            <button ion-button clear item-end (click)="autocontrolPeso()">
+            <button ion-button clear item-end>
                 <ion-icon name="ios-arrow-forward" class="icon-inline-xl"></ion-icon>
             </button>
         </ion-item>
-        <ion-item>
+        <ion-item (click)="autocontrolTalla()">
+            <ion-avatar item-start>
+                <ion-icon name="stats" class="icon-action-default icon-inline-xl" item-start></ion-icon>
+            </ion-avatar>
+            <h2>Mi Talla Corporal</h2>
+            <span *ngIf="ultimaTalla?.fecha" class="badge badge-info sm inline">
+                {{ ultimaTalla.fecha | date: "d MMM yyyy, HH:mm 'hs'" }}</span>
+            <p *ngIf="ultimaTalla?.valor">
+                Última talla registrada: <b>{{ ultimaTalla.valor }} Kg</b>
+            </p>
+            <button ion-button clear item-end>
+                <ion-icon name="ios-arrow-forward" class="icon-inline-xl"></ion-icon>
+            </button>
+        </ion-item>
+        <ion-item (click)="autocontrolPresion()">
             <ion-avatar item-start>
                 <ion-icon name="heart-outline" class="icon-action-default icon-inline-xl" item-start></ion-icon>
             </ion-avatar>
             <h2>Mi Presión Arterial</h2>
-            <p *ngIf="pacienteLocalStorage?.presion?.sistolica">
-                Última presión registrada: <b>{{ pacienteLocalStorage.presion.sistolica }}/{{
-                    pacienteLocalStorage.presion.diastolica }} mmHg</b>
-                <span class="badge badge-info">
-                    {{ pacienteLocalStorage.presion.fecha | date: "d 'de' MMMM 'del' yyyy 'a las' HH:mm" }}</span>
+            <span *ngIf="ultimaPresion?.fecha" class="badge badge-info sm inline">
+                {{ ultimaPresion.fecha | date: "d MMM yyyy, HH:mm 'hs'" }}</span>
+            <p *ngIf="ultimaPresion?.sistolica">
+                Última presión registrada: <b>{{ ultimaPresion.sistolica }}/{{
+                    ultimaPresion.diastolica }} mmHg</b>
             </p>
-            <button ion-button clear item-end (click)="autocontrolPresion()">
+            <button ion-button clear item-end>
                 <ion-icon name="ios-arrow-forward" class="icon-inline-xl"></ion-icon>
             </button>
         </ion-item>

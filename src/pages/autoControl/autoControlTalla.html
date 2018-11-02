@@ -2,7 +2,7 @@
     <page-navbar [menu]="false">
         <div buttons>
         </div>
-        <span nav-title> <b>Autocontrol</b> | Registro de Peso</span>
+        <span nav-title> <b>Autocontrol</b> | Registro de Talla</span>
     </page-navbar>
 </ion-header>
 
@@ -19,43 +19,43 @@
         <ion-avatar item-start>
             <ion-icon name="clipboard" class="icon-action-default icon-inline-xl" item-start></ion-icon>
         </ion-avatar>
-        <div *ngIf="ultimoPeso" class="andes-list-prefix">Último peso registrado
+        <div *ngIf="ultimaTalla" class="andes-list-prefix">Última talla registrada
             <h2 class="valor-longitudinal-lg">
-                {{ ultimoPeso }} kg
+                {{ ultimaTalla }} cm
             </h2>
         </div>
-        <p *ngIf="!ultimoPeso">
+        <p *ngIf="!ultimaTalla">
             No hay registros
         </p>
-        <button ion-button outline item-end (click)="flagPeso = true">
+        <button ion-button outline item-end (click)="flagTalla = true">
             Registrar nuevo
         </button>
     </ion-item>
     <ion-grid>
-        <ion-row *ngIf="flagPeso">
+        <ion-row *ngIf="flagTalla">
             <ion-col col-12>
                 <ion-item>
                     <ion-label stacked>Fecha: </ion-label>
                     <ion-datetime displayFormat="DD/MM/YYYY HH:mm" doneText="Aceptar" cancelText="Cancelar" placeholder="tocá para ingresar una fecha"
-                        [(ngModel)]="pesoFecha"></ion-datetime>
+                        [(ngModel)]="tallaFecha"></ion-datetime>
                 </ion-item>
             </ion-col>
             <ion-col col-12>
                 <ion-item>
-                    <ion-label stacked>Peso: </ion-label>
-                    <ion-input [(ngModel)]="pesoValor" placeholder="peso en kilogramos" type="number" (ionClear)="onClear($event)"
+                    <ion-label stacked>Talla: </ion-label>
+                    <ion-input [(ngModel)]="tallaValor" placeholder="talla en centímetros" type="number" (ionClear)="onClear($event)"
                         ionic-input-clearable></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="flagPeso">
+        <ion-row *ngIf="flagTalla">
             <ion-col>
                 <ion-item class="item-lg">
-                    <button ion-button clear item-start (click)="cancelarPeso()">
+                    <button ion-button clear item-start (click)="cancelarTalla()">
                         <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
                         <!-- Cancelar -->
                     </button>
-                    <button ion-button clear item-end (click)="guardarPeso()">
+                    <button ion-button clear item-end (click)="guardarTalla()">
                         <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
                         <!-- Guardar -->
                     </button>
@@ -71,18 +71,15 @@
             </ion-col>
         </ion-row>
         <br>
-        <ion-row *ngIf="ultimoPeso">
+        <ion-row *ngIf="ultimaTalla">
             <ion-col>
                 <ion-item class="item-lg">
-                    <button ion-button clear item-start (click)="eliminarPeso()">
+                    <button ion-button clear item-start (click)="eliminarTalla()">
                         <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
                     </button>
                     <span class="text-sm">
-                        Eliminar último<br>registro de Peso
+                        Eliminar último<br>registro de Talla
                     </span>
-                    <!-- <button ion-button clear item-end (click)="guardarPeso()">
-                            <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
-                    </button> -->
                 </ion-item>
             </ion-col>
         </ion-row>

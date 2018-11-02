@@ -1,23 +1,28 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { NavController, NavParams, LoadingController, MenuController, Platform, AlertController } from 'ionic-angular';
 
 
 // providers
 import { AuthProvider } from '../../providers/auth/auth';
-import { PacienteProvider } from '../../providers/paciente';
-import { ConstanteProvider } from '../../providers/constantes';
-import { ToastProvider } from '../../providers/toast';
 import { Storage } from '@ionic/storage';
 import { AutoControlPesoPage } from './autoControlPeso';
 import { AutoControlPresionPage } from './autoControlPresion';
-import * as moment from 'moment';
+import { AutoControlTallaPage } from './autoControlTalla';
 
 @Component({
     selector: 'listaAutoControl',
     templateUrl: 'listaAutoControl.html',
 })
 export class ListaAutoControlPage implements OnDestroy {
+    ultimoPeso: any;
+    ultimoPesoFecha: any;
+
+    ultimaTalla: any;
+    ultimaTallaFecha: any;
+
+    ultimaPresion: any;
+    ultimaPresionFecha: any;
+
 
     constructor(
         public storage: Storage,
@@ -26,23 +31,7 @@ export class ListaAutoControlPage implements OnDestroy {
         public menuCtrl: MenuController) {
     }
 
-    pacienteLocalStorage = {
-        presion: {
-            fecha: moment(new Date()).format('DD-MM-YYYY hh:mm'),
-            sistolica: '',
-            diastolica: ''
-        },
-        grupoFactor: '1',
-        presionHistory: [
-            { data: [0], label: 'Sistólica' },
-            { data: [0], label: 'Diastólica' }
-        ],
-        peso: {
-            fecha: moment(new Date()).format('DD-MM-YYYY hh:mm'),
-            valor: ''
-        },
-        pesoHistory: [{ data: [0], label: 'Peso' }],
-    };
+    pacienteLocalStorage = [];
 
     ngOnDestroy() {
 
@@ -53,12 +42,18 @@ export class ListaAutoControlPage implements OnDestroy {
     }
 
     loadFromLocalStorage() {
-        // this.storage.set('patientStorage', null);
-        this.storage.get('patientStorage').then((itemFound) => {
-            if (itemFound) {
-                this.pacienteLocalStorage = itemFound;
+        this.storage.keys().then((keys) => {
+            if (keys.length) {
+                keys.forEach(async key => {
+                    let item = await this.storage.get(key);
+                    if (key.includes('patientStorage')) {
+                        this.pacienteLocalStorage[key] = item;
+                        this.ultimoPeso = this.pacienteLocalStorage['patientStorage.peso'];
+                        this.ultimaPresion = this.pacienteLocalStorage['patientStorage.presion'];
+                    }
+                });
             }
-        })
+        });
     }
 
     ionViewWillEnter() {
@@ -81,11 +76,10 @@ export class ListaAutoControlPage implements OnDestroy {
         }
     }
 
-    // Función para convertir a fecha y hora actual y que sea reconocido por el componente (ya que siempre espera ISOString)
-    UTCToLocalTimeString(d: Date) {
-        let timeOffsetInHours = (d.getTimezoneOffset() / 60) * (-1);
-        d.setHours(d.getHours() + timeOffsetInHours);
-
-        return d.toISOString();
+    autocontrolTalla() {
+        if (this.isLogin()) {
+            this.navCtrl.push(AutoControlTallaPage);
+        }
     }
+
 }
