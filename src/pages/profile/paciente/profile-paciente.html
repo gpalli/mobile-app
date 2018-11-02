@@ -66,8 +66,8 @@
                             <ion-icon class="icon-action left icon-inline-xl" name="md-water"></ion-icon>
                             <ion-item>
                                 <ion-label floating>Mi Grupo Sanguíneo</ion-label>
-                                <ion-select [(ngModel)]="pacienteLocalStorage.grupoFactor" (ngModelChange)="updateBlood()"
-                                    okText="Aceptar" cancelText="Cancelar">
+                                <ion-select [(ngModel)]="grupoFactor" (ngModelChange)="updateBlood()" okText="Aceptar"
+                                    cancelText="Cancelar">
                                     <ion-option value="0">0 -</ion-option>
                                     <ion-option value="1">0 +</ion-option>
                                     <ion-option value="2">A -</ion-option>

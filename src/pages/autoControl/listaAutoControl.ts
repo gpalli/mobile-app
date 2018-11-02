@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { NavController, NavParams, LoadingController, MenuController, Platform, AlertController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 
 
 // providers

@@ -162,6 +162,9 @@ export class AutoControlPesoPage implements OnDestroy {
 
     }
 
+    onChartHover(evento) {
+        console.log('evento.........: ', evento);
+    }
 
     eliminarPeso() {
 
