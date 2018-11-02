@@ -9,7 +9,6 @@ import { Base64 } from '@ionic-native/base64';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
-import { ChartsModule } from 'ng2-charts';
 
 // pages
 import { DondeVivoDondeTrabajoPage } from './donde-vivo-donde-trabajo/donde-vivo-donde-trabajo';
@@ -63,23 +62,8 @@ export class ProfilePacientePage {
 
     mapObject: any;
     inProgress = false;
-    pacienteLocalStorage = {
-        peso: {
-            fecha: this.UTCToLocalTimeString(new Date()),
-            valor: '0'
-        },
-        presion: {
-            fecha: this.UTCToLocalTimeString(new Date()),
-            sistolica: '0',
-            diastolica: '0'
-        },
-        grupoFactor: '0',
-        pesoHistory: [{ data: [0], label: 'Peso' }],
-        presionHistory: [
-            { data: [0], label: 'Sistólica' },
-            { data: [0], label: 'Diastólica' }
-        ]
-    };
+
+    grupoFactor: 0;
 
     constructor(
         public storage: Storage,
@@ -100,26 +84,12 @@ export class ProfilePacientePage {
 
     }
 
-
-
     ionViewDidLoad() {
         let pacienteId = this.authService.user.pacientes[0].id;
         this.inProgress = true;
         this.pacienteProvider.get(pacienteId).then(async (paciente: any) => {
             this.inProgress = false;
             this.paciente = paciente;
-            // this.contactos = paciente.contacto;
-            // this.direcciones = paciente.direccion;
-
-            // this.telefonos = paciente.contacto.filter(item => item.tipo !== 'email');
-            // this.emails = paciente.contacto.filter(item => item.tipo === 'email');
-
-            // this.telefonos.push({ tipo: 'celular', valor: '' });
-            // this.emails.push({ tipo: 'email', valor: '' });
-
-            // if (this.paciente.fotoMobile) {
-            //     this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(this.paciente.fotoMobile);
-            // }
             this.loadFromLocalStorage()
         }).catch(() => {
             this.inProgress = false;
@@ -132,36 +102,18 @@ export class ProfilePacientePage {
     }
 
     loadFromLocalStorage() {
-        // this.storage.set('patientStorage', null);
-        this.storage.get('patientStorage').then((itemFound) => {
+        this.storage.get('patientBlood').then((itemFound) => {
             if (itemFound) {
-                this.pacienteLocalStorage = itemFound;
+                this.grupoFactor = itemFound;
             }
         })
     }
 
-
-    // Función para convertir a fecha y hora actual y que sea reconocido por el componente (ya que siempre espera ISOString)
-    UTCToLocalTimeString(d: Date) {
-        let timeOffsetInHours = (d.getTimezoneOffset() / 60) * (-1);
-        d.setHours(d.getHours() + timeOffsetInHours);
-
-        return d.toISOString();
-    }
-
     updateBlood() {
-        this.storage.get('patientStorage').then((datos) => {
-            if (datos) {
-                datos.grupoFactor = this.pacienteLocalStorage.grupoFactor
-                this.storage.set('patientStorage', datos);
-            } else {
-                // Con los datos iniciales
-                this.storage.set('patientStorage', this.pacienteLocalStorage)
-            }
+        this.storage.set('patientBlood', this.grupoFactor).then(() => {
             this.toast.success('Grupo Sanguineo actualizado');
         });
     }
-
 
     onInputChange(list, newType) {
         let last = list.length - 1;
@@ -170,12 +122,6 @@ export class ProfilePacientePage {
         } else if (list.length > 1 && list[last - 1].valor.length === 0) {
             list.pop();
         }
-    }
-
-
-
-    reportarChange() {
-        // console.log('Cucumbers new state:' + this.reportarError);
     }
 
     togglePersonales() {
@@ -195,7 +141,6 @@ export class ProfilePacientePage {
             this.showPersonal = this.showDondeTrabajo = this.showDondeVivo = false;
         }
     }
-
 
     toggleDondeVivo() {
         if (this.showDondeVivo) {

@@ -102,7 +102,7 @@ export class AutoControlPesoPage implements OnDestroy {
     }
 
     agregarPeso() {
-        this.pesoFecha = moment(new Date()).format('DD-MM-YYYY hh:mm');
+        this.pesoFecha = moment(new Date()).format('DD-MM-YYYY HH:mm');
         this.flagPeso = true;
         this.datosGraficar = false
     }
@@ -152,7 +152,7 @@ export class AutoControlPesoPage implements OnDestroy {
 
         if (this.pacienteLocalStorage.pesoHistory) {
             pesoFecha = this.pacienteLocalStorage.pesoHistory.map(dates => {
-                return dates['fecha'] || moment(new Date()).format('DD-MM-YYYY hh:mm');
+                return dates['fecha'] || moment(new Date()).format('DD-MM-YYYY HH:mm');
             })
             pesoData = this.pacienteLocalStorage.pesoHistory.map(values => {
                 return values['valor'];
@@ -173,6 +173,9 @@ export class AutoControlPesoPage implements OnDestroy {
 
     }
 
+    onChartHover(evento) {
+        console.log('evento.........: ', evento);
+    }
 
     // onInputChange(list, newType) {
     //     let last = list.length - 1;

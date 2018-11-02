@@ -66,7 +66,8 @@
             <ion-col col-12>
                 <div>
                     <canvas baseChart width="800" height="600" [datasets]="lineChartData" [labels]="lineChartLabels"
-                        [options]="lineChartOptions" [colors]="lineChartColors" [chartType]="lineChartType"></canvas>
+                        [options]="lineChartOptions" [colors]="lineChartColors" (chartHover)="onChartHover($event)"
+                        [chartType]="lineChartType"></canvas>
                 </div>
             </ion-col>
         </ion-row>
