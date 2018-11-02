@@ -10,7 +10,7 @@
     <div class="no-item" *ngIf="inProgress">
         <ads-icon icon="ball-triangle"></ads-icon>
     </div>
-    <ion-item>
+    <div>
         <ion-avatar item-start>
             <ion-icon name="heart-outline" class="icon-action-default icon-inline-xl"></ion-icon>
         </ion-avatar>
@@ -22,82 +22,83 @@
         <p *ngIf="!ultimaPresionSistolica && !ultimaPresionDiastolica">
             No hay registros
         </p>
-        <button ion-button outline item-end (click)="flagPresion = true">
+        <button *ngIf="newRegistry" ion-button outline item-end (click)="flagPresion = true; newRegistry = false">
             Registrar nueva
         </button>
-    </ion-item>
-    <ion-grid>
-
-        <ion-row *ngIf="flagPresion">
-            <ion-col col-12>
-                <ion-item>
-                    <ion-label stacked>Fecha:</ion-label>
-                    <ion-datetime displayFormat="DD/MM/YYYY HH:mm" doneText="Aceptar" cancelText="Cancelar" placeholder="tocá para ingresar la fecha"
-                        [(ngModel)]="presionFecha"></ion-datetime>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="flagPresion">
-            <ion-col col-12>
-                <ion-item>
-                    <ion-label stacked>Presión Sistólica</ion-label>
-                    <ion-input [(ngModel)]="presionSistolica" placeholder="tocá para ingresar el valor" type="number"
-                        (ionClear)="onClear($event)" ionic-input-clearable></ion-input>
-                    <!-- <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="presionSistolica" color="danger">
+    </div>
+    <div>
+        <ion-grid>
+            <ion-row *ngIf="flagPresion">
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Fecha:</ion-label>
+                        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" doneText="Aceptar" cancelText="Cancelar"
+                            placeholder="tocá para ingresar la fecha" [(ngModel)]="presionFecha"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="flagPresion">
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Presión Sistólica</ion-label>
+                        <ion-input [(ngModel)]="presionSistolica" placeholder="tocá para ingresar el valor" type="number"
+                            (ionClear)="onClear($event)" ionic-input-clearable></ion-input>
+                        <!-- <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="presionSistolica" color="danger">
                         <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
                         <ion-icon range-right color="danger" name="thermometer"></ion-icon>
                     </ion-range> -->
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="flagPresion">
-            <ion-col col-12>
-                <ion-item>
-                    <ion-label stacked>Presión Diastólica</ion-label>
-                    <ion-input [(ngModel)]="presionDiastolica" placeholder="tocá para ingresar el valor" type="number"
-                        (ionClear)="onClear($event)" ionic-input-clearable></ion-input>
-                    <!-- <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="presionDiastolica" color="danger">
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="flagPresion">
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Presión Diastólica</ion-label>
+                        <ion-input [(ngModel)]="presionDiastolica" placeholder="tocá para ingresar el valor" type="number"
+                            (ionClear)="onClear($event)" ionic-input-clearable></ion-input>
+                        <!-- <ion-range min="10" max="250" step="1" snaps="true" [(ngModel)]="presionDiastolica" color="danger">
                         <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
                         <ion-icon range-right color="danger" name="thermometer"></ion-icon>
                     </ion-range> -->
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="flagPresion">
-            <ion-col col-12>
-                <ion-item class="item-lg">
-                    <button ion-button clear item-start (click)="cancelarPresion()">
-                        <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
-                        <!-- Cancelar -->
-                    </button>
-                    <button ion-button clear item-end (click)="guardarPresion()">
-                        <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
-                        <!-- Guardar -->
-                    </button>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <br>
-        <ion-row *ngIf="datosGraficar && pacienteLocalStorage?.historico?.length">
-            <ion-col col-12>
-                <div>
-                    <canvas baseChart width="800" height="600" [datasets]="lineChartDataPresion" [labels]="lineChartLabelsPresion"
-                        [options]="lineChartOptionsPresion" [colors]="lineChartColorsPresion" [chartType]="lineChartTypePresion"></canvas>
-                </div>
-            </ion-col>
-        </ion-row>
-        <br>
-        <ion-row *ngIf="ultimaPresionSistolica && ultimaPresionDiastolica">
-            <ion-col>
-                <ion-item class="item-lg">
-                    <button ion-button clear item-start (click)="eliminarPresion()">
-                        <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
-                    </button>
-                    <span class="text-sm">
-                        Eliminar último<br>registro de Presión
-                    </span>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="flagPresion">
+                <ion-col col-12>
+                    <ion-item class="item-lg">
+                        <button ion-button clear item-start (click)="cancelarPresion()">
+                            <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
+                            <!-- Cancelar -->
+                        </button>
+                        <button ion-button clear item-end (click)="guardarPresion()">
+                            <ion-icon name="checkmark-circle" class="icon-action-success icon-inline-xl"></ion-icon>
+                            <!-- Guardar -->
+                        </button>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <br>
+            <ion-row *ngIf="datosGraficar && pacienteLocalStorage?.historico?.length">
+                <ion-col col-12>
+                    <div>
+                        <canvas baseChart width="800" height="600" [datasets]="lineChartDataPresion" [labels]="lineChartLabelsPresion"
+                            [options]="lineChartOptionsPresion" [colors]="lineChartColorsPresion" [chartType]="lineChartTypePresion"></canvas>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <br>
+            <ion-row *ngIf="ultimaPresionSistolica && ultimaPresionDiastolica">
+                <ion-col>
+                    <ion-item class="item-lg">
+                        <button ion-button clear item-start (click)="eliminarPresion()">
+                            <ion-icon name="close-circle" class="icon-action-danger icon-inline-xl"></ion-icon>
+                        </button>
+                        <span class="text-sm">
+                            Eliminar último<br>registro de Presión
+                        </span>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
 </ion-content>

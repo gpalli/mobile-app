@@ -50,6 +50,7 @@ export class ListaAutoControlPage implements OnDestroy {
                         this.pacienteLocalStorage[key] = item;
                         this.ultimoPeso = this.pacienteLocalStorage['patientStorage.peso'];
                         this.ultimaPresion = this.pacienteLocalStorage['patientStorage.presion'];
+                        this.ultimaTalla = this.pacienteLocalStorage['patientStorage.talla']
                     }
                 });
             }
@@ -57,6 +58,7 @@ export class ListaAutoControlPage implements OnDestroy {
     }
 
     ionViewWillEnter() {
+        this.loadFromLocalStorage();
         this.menuCtrl.enable(true);
     }
 

@@ -27,6 +27,7 @@ export class AutoControlPresionPage implements OnDestroy {
     presionSistolica = null;
     presionDiastolica = null;
     presionFecha;
+    newRegistry = true;
 
     ultimaPresionSistolica = null;
     ultimaPresionDiastolica = null;
@@ -154,6 +155,7 @@ export class AutoControlPresionPage implements OnDestroy {
         this.pacienteLocalStorage.historico.push(newPresion);
         this.flagPresion = false;
         this.datosGraficar = false;
+        this.newRegistry = true;
         this.storage.set('patientStorage.presion', this.pacienteLocalStorage).then((item) => {
             this.loadChartPresion();
             return;
@@ -162,6 +164,7 @@ export class AutoControlPresionPage implements OnDestroy {
 
     cancelarPresion() {
         this.flagPresion = false;
+        this.newRegistry = true;
         // this.navCtrl.pop();
     }
 
@@ -201,7 +204,6 @@ export class AutoControlPresionPage implements OnDestroy {
 
 
     eliminarPresion() {
-
         let alert = this.alertCtrl.create({
             title: 'Confirmar',
             message: '¿Eliminar último registro de presión?',
@@ -228,8 +230,5 @@ export class AutoControlPresionPage implements OnDestroy {
             ]
         });
         alert.present();
-
     }
-
-
 }

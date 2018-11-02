@@ -32,6 +32,7 @@ export class AutoControlTallaPage implements OnDestroy {
     tallaValor = null;
     ultimaTalla = null;
     ultimaTallaFecha = null;
+    newRegistry = true;
 
     hoy = moment().format('DD-MM-YYY');
 
@@ -122,6 +123,7 @@ export class AutoControlTallaPage implements OnDestroy {
         this.pacienteLocalStorage.historico.push(newTalla);
         this.flagTalla = false;
         this.datosGraficar = false;
+        this.newRegistry = true;
         this.storage.set('patientStorage.talla', this.pacienteLocalStorage).then((item) => {
             this.ultimaTalla = this.pacienteLocalStorage.valor;
             this.loadChartTalla();
@@ -131,7 +133,7 @@ export class AutoControlTallaPage implements OnDestroy {
     }
     cancelarTalla() {
         this.flagTalla = false;
-        // this.navCtrl.pop();
+        this.newRegistry = true;
     }
 
     loadChartTalla() {

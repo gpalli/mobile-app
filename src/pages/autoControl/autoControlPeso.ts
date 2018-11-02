@@ -32,6 +32,7 @@ export class AutoControlPesoPage implements OnDestroy {
     pesoValor = null;
     ultimoPeso = null;
     ultimoPesoFecha = null;
+    newRegistry = true;
 
     hoy = moment().format('DD-MM-YYY');
 
@@ -122,6 +123,7 @@ export class AutoControlPesoPage implements OnDestroy {
         this.pacienteLocalStorage.historico.push(newPeso);
         this.flagPeso = false;
         this.datosGraficar = false;
+        this.newRegistry = true;
         this.storage.set('patientStorage.peso', this.pacienteLocalStorage).then((item) => {
             this.ultimoPeso = this.pacienteLocalStorage.valor;
             this.loadChartPeso();
@@ -131,7 +133,7 @@ export class AutoControlPesoPage implements OnDestroy {
     }
     cancelarPeso() {
         this.flagPeso = false;
-        // this.navCtrl.pop();
+        this.newRegistry = true;
     }
 
     loadChartPeso() {
@@ -162,12 +164,7 @@ export class AutoControlPesoPage implements OnDestroy {
 
     }
 
-    onChartHover(evento) {
-        console.log('evento.........: ', evento);
-    }
-
     eliminarPeso() {
-
         let alert = this.alertCtrl.create({
             title: 'Confirmar',
             message: '¿Eliminar último registro de peso?',
@@ -193,10 +190,5 @@ export class AutoControlPesoPage implements OnDestroy {
             ]
         });
         alert.present();
-
     }
-
-
-
-
 }

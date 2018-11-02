@@ -102,7 +102,7 @@ export class ProfilePacientePage {
     }
 
     loadFromLocalStorage() {
-        this.storage.get('patientBlood').then((itemFound) => {
+        this.storage.get('patientStorage.grupoFactor').then((itemFound) => {
             if (itemFound) {
                 this.grupoFactor = itemFound;
             }
@@ -110,7 +110,7 @@ export class ProfilePacientePage {
     }
 
     updateBlood() {
-        this.storage.set('patientBlood', this.grupoFactor).then(() => {
+        this.storage.set('patientStorage.grupoFactor', this.grupoFactor).then(() => {
             this.toast.success('Grupo Sanguineo actualizado');
         });
     }
