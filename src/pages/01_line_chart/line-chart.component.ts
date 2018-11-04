@@ -22,7 +22,7 @@ export class LineChartComponent implements OnInit {
     @Input() xAxisText = '';
 
     private margin = { top: 20, right: 20, bottom: 30, left: 50 };
-    private width: number;
+    public width: number;
     private height: number;
     private x: any;
     private y: any;
@@ -30,11 +30,11 @@ export class LineChartComponent implements OnInit {
     private line: d3Shape.Line<[number, number]>;
 
     constructor() {
-        this.width = 450 - this.margin.left - this.margin.right;
-        this.height = 250 - this.margin.top - this.margin.bottom;
     }
 
     ngOnInit() {
+        this.width = 450 - this.margin.left - this.margin.right;
+        this.height = 250 - this.margin.top - this.margin.bottom;
         this.initSvg();
         this.initAxis();
         this.drawAxis();
@@ -43,6 +43,7 @@ export class LineChartComponent implements OnInit {
 
     private initSvg() {
         this.svg = d3.select('svg')
+            .call(this.responsivefy)
             .append('g')
             .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
     }
@@ -83,6 +84,48 @@ export class LineChartComponent implements OnInit {
             .datum(this.data)
             .attr('class', 'line')
             .attr('d', this.line);
+
+        // this.svg.selectAll('path')
+        //     .data(this.data)
+        //     .enter().append('g')
+        //     .append('text')
+        //     .attr('class', 'below')
+        //     .attr('x', 12)
+        //     .attr('dy', '1.2em')
+        //     .attr('text-anchor', 'left')
+        //     .text(function (d) { return d.value; })
+        //     .style('fill', '#000000');
+    }
+
+    responsivefy(svg) {
+        let width = 480;
+        let height = 320;
+        // get container + svg aspect ratio
+        let container = d3.select(svg.node().parentNode),
+            aspect = width / height;
+        // width = Number(svg.style('width')),
+        // height = Number(svg.style('height')),
+
+        console.log(width);
+
+        // add viewBox and preserveAspectRatio properties,
+        // and call resize so that svg resizes on inital page load
+        svg.attr('viewBox', '0 0 ' + width + ' ' + height)
+            .attr('perserveAspectRatio', 'xMinYMid')
+            .call(resize);
+
+        // to register multiple listeners for same event type,
+        // you need to add namespace, i.e., 'click.foo'
+        // necessary if you call invoke this function for multiple svgs
+        // api docs: https://github.com/mbostock/d3/wiki/Selections#on
+        d3.select(window).on('resize.' + container.attr('id'), resize);
+
+        // get width of container and resize svg to fit it
+        function resize() {
+            let targetWidth = Number(container.style('width'));
+            svg.attr('width', targetWidth);
+            svg.attr('height', Math.round(targetWidth / aspect));
+        }
     }
 
 }
