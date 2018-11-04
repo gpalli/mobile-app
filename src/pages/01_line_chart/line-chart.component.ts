@@ -106,8 +106,6 @@ export class LineChartComponent implements OnInit {
         // width = Number(svg.style('width')),
         // height = Number(svg.style('height')),
 
-        console.log(width);
-
         // add viewBox and preserveAspectRatio properties,
         // and call resize so that svg resizes on inital page load
         svg.attr('viewBox', '0 0 ' + width + ' ' + height)
