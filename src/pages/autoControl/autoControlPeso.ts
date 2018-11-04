@@ -33,38 +33,36 @@ export class AutoControlPesoPage implements OnDestroy {
     ultimoPeso = null;
     ultimoPesoFecha = null;
 
-    hoy = moment().format('DD-MM-YYY');
-
     pacienteLocalStorage = {
         fecha: null,
         valor: 0,
         historico: [{ fecha: new Date(), valor: null }],
     };
 
-    lineChartData = [{ data: [], label: '' }];
-    lineChartLabels = [];
-    lineChartColors = [{
-        backgroundColor: 'rgba(103, 58, 183, .1)',
-        borderColor: 'rgb(103, 58, 183)',
-        pointBackgroundColor: 'rgb(103, 58, 183)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(103, 58, 183, .8)'
-    }];
+    // lineChartData = [{ data: [], label: '' }];
+    // lineChartLabels = [];
+    // lineChartColors = [{
+    //     backgroundColor: 'rgba(103, 58, 183, .1)',
+    //     borderColor: 'rgb(103, 58, 183)',
+    //     pointBackgroundColor: 'rgb(103, 58, 183)',
+    //     pointBorderColor: '#fff',
+    //     pointHoverBackgroundColor: '#fff',
+    //     pointHoverBorderColor: 'rgba(103, 58, 183, .8)'
+    // }];
 
-    lineChartOptions = {
-        responsive: true
-    };
+    // lineChartOptions = {
+    //     responsive: true
+    // };
 
-    lineChartType = 'line';
-    lineChartColorsPresion = [{ // dark grey
-        backgroundColor: 'rgba(77,83,96,0.2)',
-        borderColor: 'rgba(77,83,96,1)',
-        pointBackgroundColor: 'rgba(77,83,96,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(77,83,96,1)'
-    }];
+    // lineChartType = 'line';
+    // lineChartColorsPresion = [{ // dark grey
+    //     backgroundColor: 'rgba(77,83,96,0.2)',
+    //     borderColor: 'rgba(77,83,96,1)',
+    //     pointBackgroundColor: 'rgba(77,83,96,1)',
+    //     pointBorderColor: '#fff',
+    //     pointHoverBackgroundColor: '#fff',
+    //     pointHoverBorderColor: 'rgba(77,83,96,1)'
+    // }];
 
     constructor(
         public storage: Storage,
@@ -95,9 +93,10 @@ export class AutoControlPesoPage implements OnDestroy {
                 this.pacienteLocalStorage = itemFound;
                 this.data = this.pacienteLocalStorage.historico.filter(x => typeof x.fecha !== 'undefined').map(y => ({ date: new Date(y.fecha), value: parseFloat(y.valor) }));
                 this.data.sort((a, b) => b.date - a.date);
-                console.log(this.data);
 
-                this.ultimoPeso = this.pacienteLocalStorage && this.pacienteLocalStorage.valor ? this.pacienteLocalStorage.valor : 0;
+                if (this.pacienteLocalStorage && this.pacienteLocalStorage.historico) {
+                    this.ultimoPeso = this.pacienteLocalStorage.historico[this.pacienteLocalStorage.historico.length - 1].valor;
+                }
             }
             this.inProgress = false;
             this.datosGraficar = true;
@@ -152,14 +151,14 @@ export class AutoControlPesoPage implements OnDestroy {
             pesoData = this.pacienteLocalStorage.historico.map(values => {
                 return values['valor'];
             });
-            this.lineChartData = [
-                { data: pesoData, label: 'Peso' }
-            ];
-            this.lineChartLabels = pesoFecha;
-            this.lineChartOptions = {
-                responsive: true
-            };
-            this.lineChartType = 'line';
+            // this.lineChartData = [
+            //     { data: pesoData, label: 'Peso' }
+            // ];
+            // this.lineChartLabels = pesoFecha;
+            // this.lineChartOptions = {
+            //     responsive: true
+            // };
+            // this.lineChartType = 'line';
             this.datosGraficar = true;
 
             this.ultimoPeso = pesoData[pesoData.length - 1];
@@ -188,7 +187,7 @@ export class AutoControlPesoPage implements OnDestroy {
                     text: 'Eliminar',
                     handler: () => {
                         this.pacienteLocalStorage.historico.pop();
-                        this.storage.set('patientStorage.talla', this.pacienteLocalStorage).then((item) => {
+                        this.storage.set('patientStorage.peso', this.pacienteLocalStorage).then((item) => {
                             this.ultimoPeso = this.pacienteLocalStorage.valor;
                             this.loadChartPeso();
                             this.pesoValor = this.pesoFecha = null;

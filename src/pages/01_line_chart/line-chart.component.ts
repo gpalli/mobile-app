@@ -121,7 +121,7 @@ export class LineChartComponent implements OnInit {
         // get width of container and resize svg to fit it
         function resize() {
             let targetWidth = Number(container.style('width'));
-            svg.attr('width', targetWidth);
+            svg.attr('width', !isNaN(targetWidth) ? targetWidth : 0);
             svg.attr('height', Math.round(targetWidth / aspect));
         }
     }

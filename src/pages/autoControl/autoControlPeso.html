@@ -66,7 +66,9 @@
 
         <!-- </ion-col>
         </ion-row> -->
-        <app-line-chart *ngIf="data && datosGraficar" [data]="data" xAxisText="Peso (Kg)"></app-line-chart>
+        <div>
+            <app-line-chart *ngIf="data && datosGraficar" [data]="data" xAxisText="Peso (Kg)"></app-line-chart>
+        </div>
         <br>
         <ion-row *ngIf="ultimoPeso">
             <ion-col>
