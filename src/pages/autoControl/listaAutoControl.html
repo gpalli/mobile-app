@@ -10,7 +10,7 @@
                 <ion-icon name="clipboard" class="icon-action-default icon-inline-xl" item-start></ion-icon>
             </ion-avatar>
             <h2>Mi Peso Corporal</h2>
-            <span *ngIf="ultimoPeso?.fecha" class="badge badge-info sm inline">
+            <span *ngIf="ultimoPeso?.fecha && ultimoPeso?.valor" class="badge badge-info sm inline">
                 {{ ultimoPeso.fecha | date: "d MMM yyyy, HH:mm 'hs'" }}</span>
             <p *ngIf="ultimoPeso?.valor">
                 Último peso registrado: <b>{{ ultimoPeso.valor }} Kg</b>
@@ -24,7 +24,7 @@
                 <ion-icon name="stats" class="icon-action-default icon-inline-xl" item-start></ion-icon>
             </ion-avatar>
             <h2>Mi Talla Corporal</h2>
-            <span *ngIf="ultimaTalla?.fecha" class="badge badge-info sm inline">
+            <span *ngIf="ultimaTalla?.fecha && ultimaTalla?.valor" class="badge badge-info sm inline">
                 {{ ultimaTalla.fecha | date: "d MMM yyyy, HH:mm 'hs'" }}</span>
             <p *ngIf="ultimaTalla?.valor">
                 Última talla registrada: <b>{{ ultimaTalla.valor }} cm</b>
@@ -38,7 +38,7 @@
                 <ion-icon name="heart-outline" class="icon-action-default icon-inline-xl" item-start></ion-icon>
             </ion-avatar>
             <h2>Mi Presión Arterial</h2>
-            <span *ngIf="ultimaPresion?.fecha" class="badge badge-info sm inline">
+            <span *ngIf="ultimaPresion?.fecha && ultimaPresion?.sistolica" class="badge badge-info sm inline">
                 {{ ultimaPresion.fecha | date: "d MMM yyyy, HH:mm 'hs'" }}</span>
             <p *ngIf="ultimaPresion?.sistolica">
                 Última presión registrada: <b>{{ ultimaPresion.sistolica }}/{{

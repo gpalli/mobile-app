@@ -10,11 +10,11 @@
     <div class="no-item" *ngIf="inProgress">
         <ads-icon icon="ball-triangle"></ads-icon>
     </div>
-    <div>
+    <ion-item>
         <ion-avatar item-start>
             <ion-icon name="clipboard" class="icon-action-default icon-inline-xl" item-start></ion-icon>
         </ion-avatar>
-        <div *ngIf="ultimoPeso" class="andes-list-prefix">Último peso registrado
+        <div *ngIf="ultimoPeso" class="andes-list-prefix">Último peso
             <h2 class="valor-longitudinal-lg">
                 {{ ultimoPeso }} kg
             </h2>
@@ -25,7 +25,7 @@
         <button *ngIf="newRegistry" ion-button outline item-end (click)="flagPeso = true; newRegistry = false">
             Registrar nuevo
         </button>
-    </div>
+    </ion-item>
     <div>
         <ion-grid>
             <ion-row *ngIf="flagPeso">

@@ -39,11 +39,19 @@ export class AutoControlPesoPage implements OnDestroy {
     pacienteLocalStorage = {
         fecha: null,
         valor: 0,
-        historico: [{ data: [0], label: 'Peso' }],
+        historico: [{ data: [0], label: 'Peso', fecha: moment(new Date()).format('D-M-Y hh:mm') }],
     };
 
     lineChartData = [{ data: [], label: '' }];
-    lineChartLabels = [];
+    lineChartLabels = [
+        {
+            legend: {
+                labels: {
+                    fontColor: '#ff0000'
+                }
+            }
+        }
+    ];
     lineChartColors = [{
         backgroundColor: 'rgba(103, 58, 183, .1)',
         borderColor: 'rgb(103, 58, 183)',
@@ -58,14 +66,6 @@ export class AutoControlPesoPage implements OnDestroy {
     };
 
     lineChartType = 'line';
-    lineChartColorsPresion = [{ // dark grey
-        backgroundColor: 'rgba(77,83,96,0.2)',
-        borderColor: 'rgba(77,83,96,1)',
-        pointBackgroundColor: 'rgba(77,83,96,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(77,83,96,1)'
-    }];
 
     constructor(
         public storage: Storage,
@@ -143,7 +143,7 @@ export class AutoControlPesoPage implements OnDestroy {
 
         if (this.pacienteLocalStorage.historico) {
             pesoFecha = this.pacienteLocalStorage.historico.map(dates => {
-                return moment(dates['fecha']).format('ll hh:mm') || moment(new Date()).format('ll hh:mm');
+                return moment(dates['fecha']).format('M/Y') || moment(new Date()).format('D-M-Y hh:mm');
             })
             pesoData = this.pacienteLocalStorage.historico.map(values => {
                 return values['valor'];
@@ -179,7 +179,7 @@ export class AutoControlPesoPage implements OnDestroy {
                     text: 'Eliminar',
                     handler: () => {
                         this.pacienteLocalStorage.historico.pop();
-                        this.storage.set('patientStorage.talla', this.pacienteLocalStorage).then((item) => {
+                        this.storage.set('patientStorage.peso', this.pacienteLocalStorage).then((item) => {
                             this.ultimoPeso = this.pacienteLocalStorage.valor;
                             this.loadChartPeso();
                             this.pesoValor = this.pesoFecha = null;

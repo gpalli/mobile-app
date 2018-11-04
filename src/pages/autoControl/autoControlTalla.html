@@ -10,11 +10,11 @@
     <div class="no-item" *ngIf="inProgress">
         <ads-icon icon="ball-triangle"></ads-icon>
     </div>
-    <div>
+    <ion-item>
         <ion-avatar item-start>
             <ion-icon name="stats" class="icon-action-default icon-inline-xl" item-start></ion-icon>
         </ion-avatar>
-        <div *ngIf="ultimaTalla" class="andes-list-prefix">Última talla registrada
+        <div *ngIf="ultimaTalla" class="andes-list-prefix">Última talla
             <h2 class="valor-longitudinal-lg">
                 {{ ultimaTalla }} cm
             </h2>
@@ -25,7 +25,7 @@
         <button *ngIf="newRegistry" ion-button outline item-end (click)="flagTalla = true; newRegistry = false">
             Registrar nuevo
         </button>
-    </div>
+    </ion-item>
     <div>
         <ion-grid>
             <ion-row *ngIf="flagTalla">

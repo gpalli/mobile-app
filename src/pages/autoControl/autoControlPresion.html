@@ -10,7 +10,7 @@
     <div class="no-item" *ngIf="inProgress">
         <ads-icon icon="ball-triangle"></ads-icon>
     </div>
-    <div>
+    <ion-item>
         <ion-avatar item-start>
             <ion-icon name="heart-outline" class="icon-action-default icon-inline-xl"></ion-icon>
         </ion-avatar>
@@ -25,7 +25,7 @@
         <button *ngIf="newRegistry" ion-button outline item-end (click)="flagPresion = true; newRegistry = false">
             Registrar nueva
         </button>
-    </div>
+    </ion-item>
     <div>
         <ion-grid>
             <ion-row *ngIf="flagPresion">

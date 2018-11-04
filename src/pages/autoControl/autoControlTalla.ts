@@ -39,7 +39,7 @@ export class AutoControlTallaPage implements OnDestroy {
     pacienteLocalStorage = {
         fecha: null,
         valor: 0,
-        historico: [{ data: [0], label: 'Talla' }],
+        historico: [{ data: [0], label: 'Talla', fecha: moment(new Date()).format('D-M-Y hh:mm') }],
     };
 
     lineChartData = [{ data: [], label: '' }];
@@ -143,7 +143,7 @@ export class AutoControlTallaPage implements OnDestroy {
 
         if (this.pacienteLocalStorage.historico) {
             tallaFecha = this.pacienteLocalStorage.historico.map(dates => {
-                return moment(dates['fecha']).format('ll hh:mm') || moment(new Date()).format('ll hh:mm');
+                return moment(dates['fecha']).format('M/Y') || moment(new Date()).format('ll hh:mm');
             })
             tallaData = this.pacienteLocalStorage.historico.map(values => {
                 return values['valor'];

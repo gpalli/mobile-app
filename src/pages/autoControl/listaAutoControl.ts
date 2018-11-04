@@ -34,12 +34,15 @@ export class ListaAutoControlPage implements OnDestroy {
     pacienteLocalStorage = [];
 
     ngOnDestroy() {
-
     }
 
     ionViewDidLoad() {
-        this.loadFromLocalStorage()
     }
+
+    // this.ultimaPresion = this.ultimaPresionFecha = this.ultimaTalla = this.ultimaTallaFecha = this.ultimoPeso = this.ultimoPesoFecha = null;
+    // ionViewWillEnter() {
+    //     this.loadFromLocalStorage();
+    // }
 
     loadFromLocalStorage() {
         this.storage.keys().then((keys) => {
@@ -47,10 +50,22 @@ export class ListaAutoControlPage implements OnDestroy {
                 keys.forEach(async key => {
                     let item = await this.storage.get(key);
                     if (key.includes('patientStorage')) {
+                        // if (item.historico.find(x => x.data).length !== -1) {
                         this.pacienteLocalStorage[key] = item;
-                        this.ultimoPeso = this.pacienteLocalStorage['patientStorage.peso'];
-                        this.ultimaPresion = this.pacienteLocalStorage['patientStorage.presion'];
-                        this.ultimaTalla = this.pacienteLocalStorage['patientStorage.talla']
+
+                        if (this.pacienteLocalStorage['patientStorage.peso'] && this.pacienteLocalStorage['patientStorage.peso'].historico) {
+                            let historicoPeso = this.pacienteLocalStorage['patientStorage.peso'].historico;
+                            this.ultimoPeso = historicoPeso[historicoPeso.length - 1];
+                        }
+                        if (this.pacienteLocalStorage['patientStorage.presion'] && this.pacienteLocalStorage['patientStorage.presion'].historico) {
+                            let historicoPresion = this.pacienteLocalStorage['patientStorage.presion'].historico;
+                            this.ultimaPresion = historicoPresion[historicoPresion.length - 1];
+                        }
+                        if (this.pacienteLocalStorage['patientStorage.talla'] && this.pacienteLocalStorage['patientStorage.talla'].historico) {
+                            let historicoTalla = this.pacienteLocalStorage['patientStorage.talla'].historico;
+                            this.ultimaTalla = historicoTalla[historicoTalla.length - 1];
+                        }
+                        // }
                     }
                 });
             }
