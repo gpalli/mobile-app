@@ -33,7 +33,7 @@ export class LineChartComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.width = 450 - this.margin.left - this.margin.right;
+        this.width = 460 - this.margin.left - this.margin.right;
         this.height = 250 - this.margin.top - this.margin.bottom;
         this.initSvg();
         this.initAxis();
@@ -83,7 +83,12 @@ export class LineChartComponent implements OnInit {
         this.svg.append('path')
             .datum(this.data)
             .attr('class', 'line')
-            .attr('d', this.line);
+            .attr('d', this.line)
+            .append('textPath')
+            .attr('stroke', 'white')
+            .attr('fill', 'white')
+            .attr('xlink:href', '#path')
+            .text('23123')
 
         // this.svg.selectAll('path')
         //     .data(this.data)
@@ -98,8 +103,8 @@ export class LineChartComponent implements OnInit {
     }
 
     responsivefy(svg) {
-        let width = 480;
-        let height = 320;
+        let width = 300;
+        let height = 250;
         // get container + svg aspect ratio
         let container = d3.select(svg.node().parentNode),
             aspect = width / height;
@@ -121,7 +126,8 @@ export class LineChartComponent implements OnInit {
         // get width of container and resize svg to fit it
         function resize() {
             let targetWidth = Number(container.style('width'));
-            svg.attr('width', !isNaN(targetWidth) ? targetWidth : 0);
+            targetWidth = isNaN(targetWidth) ? width : targetWidth;
+            svg.attr('width', !isNaN(targetWidth) ? targetWidth : width);
             svg.attr('height', Math.round(targetWidth / aspect));
         }
     }

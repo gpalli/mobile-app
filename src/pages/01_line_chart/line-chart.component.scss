@@ -10,8 +10,8 @@
 }
 
 .axis-title {
-    fill: none;
-    stroke: black;
+    fill: black;
+    stroke: none;
     stroke-width: 0.5px;
 }
 
@@ -23,5 +23,5 @@
 .line {
     fill: none;
     stroke: steelblue;
-    stroke-width: 1.5px;
+    stroke-width: .5rem;
 }

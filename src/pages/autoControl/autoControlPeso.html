@@ -17,7 +17,7 @@
         <ion-avatar item-start>
             <ion-icon name="clipboard" class="icon-action-default icon-inline-xl" item-start></ion-icon>
         </ion-avatar>
-        <div *ngIf="ultimoPeso" class="andes-list-prefix">Último peso registrado
+        <div *ngIf="ultimoPeso" class="andes-list-prefix">Último registro
             <h2 class="valor-longitudinal-lg">
                 {{ ultimoPeso }} kg
             </h2>
@@ -66,7 +66,7 @@
 
         <!-- </ion-col>
         </ion-row> -->
-        <div>
+        <div *ngIf="!flagPeso">
             <app-line-chart *ngIf="data && datosGraficar" [data]="data" xAxisText="Peso (Kg)"></app-line-chart>
         </div>
         <br>
