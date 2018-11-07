@@ -57,6 +57,7 @@
         "@types/node": "^9.4.0",
         "angular2-jwt": "^0.2.3",
         "chart.js": "^2.7.3",
+        "chartjs-plugin-datalabels": "^0.4.0",
         "com-badrit-base64": "^0.2.0",
         "com.darktalker.cordova.screenshot": "^0.1.6",
         "cordova-android": "6.4.0",
