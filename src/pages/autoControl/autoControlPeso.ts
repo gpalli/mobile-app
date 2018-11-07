@@ -10,12 +10,14 @@ import { ConstanteProvider } from '../../providers/constantes';
 import { ToastProvider } from '../../providers/toast';
 import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
-
+import * as chartjs from 'chart.js';
+import 'chartjs-plugin-datalabels';
 @Component({
     selector: 'autoControlPeso',
     templateUrl: 'autoControlPeso.html',
 })
 export class AutoControlPesoPage implements OnDestroy {
+
 
     ngOnDestroy() {
     }
@@ -47,7 +49,7 @@ export class AutoControlPesoPage implements OnDestroy {
         {
             legend: {
                 labels: {
-                    fontColor: '#ff0000'
+                    fontColor: '#ff0000',
                 }
             }
         }
@@ -62,7 +64,15 @@ export class AutoControlPesoPage implements OnDestroy {
     }];
 
     lineChartOptions = {
-        responsive: true
+        responsive: true,
+        scaleShowValues: true,
+        scaleValuePaddingX: '20px',
+        scaleValuePaddingY: 20,
+        plugins: {
+            datalabels: {
+                align: 'end'
+            }
+        }
     };
 
     lineChartType = 'line';
@@ -83,8 +93,10 @@ export class AutoControlPesoPage implements OnDestroy {
     ) { }
 
     ionViewDidLoad() {
+        chartjs.defaults.global.plugins.datalabels.align = 'right';
+        // chartjs.defaults.global.plugins.datalabels.align = 'end';
         this.inProgress = true;
-        this.loadFromLocalStorage()
+        this.loadFromLocalStorage();
     }
 
     loadFromLocalStorage() {
@@ -153,7 +165,10 @@ export class AutoControlPesoPage implements OnDestroy {
             ];
             this.lineChartLabels = pesoFecha;
             this.lineChartOptions = {
-                responsive: true
+                responsive: true,
+                scaleShowValues: true,
+                scaleValuePaddingX: 10,
+                scaleValuePaddingY: 10
             };
             this.lineChartType = 'line';
             this.datosGraficar = true;
@@ -190,5 +205,9 @@ export class AutoControlPesoPage implements OnDestroy {
             ]
         });
         alert.present();
+    }
+
+    onChartHover(e) {
+
     }
 }
