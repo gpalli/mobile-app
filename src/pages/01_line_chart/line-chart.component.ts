@@ -28,6 +28,7 @@ export class LineChartComponent implements OnInit {
     private y: any;
     private svg: any;
     private line: d3Shape.Line<[number, number]>;
+    points: any[];
 
     constructor() {
     }
@@ -39,6 +40,7 @@ export class LineChartComponent implements OnInit {
         this.initAxis();
         this.drawAxis();
         this.drawLine();
+        this.updatePoints();
     }
 
     private initSvg() {
@@ -54,6 +56,10 @@ export class LineChartComponent implements OnInit {
         this.x.domain(d3Array.extent(this.data, (d) => d.date));
         // this.y.domain(d3Array.extent(this.data, (d) => d.value));
         this.y.domain([0, this.height]);
+
+        this.points = [d3Scale.scaleLinear()
+            .range([this.height, 0])
+            .domain([0, this.width])];
     }
 
     private drawAxis() {
@@ -78,28 +84,35 @@ export class LineChartComponent implements OnInit {
     private drawLine() {
         this.line = d3Shape.line()
             .x((d: any) => this.x(d.date))
-            .y((d: any) => this.y(d.value));
+            .y((d: any) => this.y(d.value))
+            .curve(d3Shape.curveCatmullRomOpen.alpha(0.5));
+        // .curve(d3Shape.curveNatural);
 
         this.svg.append('path')
             .datum(this.data)
             .attr('class', 'line')
             .attr('d', this.line)
+            // .on('mouseover', function (d, i) { alert('mouseover'); })
             .append('textPath')
             .attr('stroke', 'white')
             .attr('fill', 'white')
             .attr('xlink:href', '#path')
-            .text('23123')
+            .text('23123');
 
-        // this.svg.selectAll('path')
-        //     .data(this.data)
-        //     .enter().append('g')
-        //     .append('text')
-        //     .attr('class', 'below')
-        //     .attr('x', 12)
-        //     .attr('dy', '1.2em')
-        //     .attr('text-anchor', 'left')
-        //     .text(function (d) { return d.value; })
-        //     .style('fill', '#000000');
+        console.log(this.data.length);
+
+        this.svg.selectAll('path')
+            .data(this.data)
+            .enter().append('g')
+            .append('text')
+            .attr('class', 'below')
+            // .attr('x', function (d) { return d3Scale.scaleTime().range(d.date) })
+            .attr('x', (d) => console.log(new Date(this.data[this.data.length - 1].date).getTime() + ' => ' + new Date(d.date).getTime()))
+            .attr('y', (d) => 200 - d.value)
+            .attr('dy', '-1em')
+            .attr('text-anchor', 'left')
+            .text(function (d) { return d.value + ' Kg'; })
+            .style('fill', '#000000');
     }
 
     responsivefy(svg) {
@@ -130,6 +143,24 @@ export class LineChartComponent implements OnInit {
             svg.attr('width', !isNaN(targetWidth) ? targetWidth : width);
             svg.attr('height', Math.round(targetWidth / aspect));
         }
+    }
+
+    updatePoints() {
+        let u = d3.select('g')
+            .selectAll('circle')
+            .data(this.points.slice(0, this.points.length));
+
+        u.enter()
+            .append('circle')
+            .attr('r', 4)
+            // .call(drag)
+            .merge(u)
+            .attr('cx', function (d) { return d[0]; })
+            .attr('cy', function (d) { return d[1]; })
+            .attr('x', (d) => new Date(this.data[this.data.length - 1].date).getTime() - new Date(d.date).getTime())
+            .attr('y', (d) => 200 - d.value);
+
+        u.exit().remove();
     }
 
 }

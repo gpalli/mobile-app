@@ -91,7 +91,7 @@ export class AutoControlPesoPage implements OnDestroy {
         this.storage.get('patientStorage.peso').then((itemFound) => {
             if (itemFound) {
                 this.pacienteLocalStorage = itemFound;
-                this.data = this.pacienteLocalStorage.historico.filter(x => !isNaN(x.valor)).map(y =>
+                this.data = this.pacienteLocalStorage.historico.filter(x => !isNaN(x.valor) && typeof x.fecha !== 'undefined').map(y =>
                     ({
                         date: new Date(y.fecha), value: parseFloat(y.valor)
                     }));
